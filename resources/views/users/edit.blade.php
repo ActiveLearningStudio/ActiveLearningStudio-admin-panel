@@ -21,7 +21,7 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                {{ Aire::open()->route('admin.users.store')->class('form-horizontal')->post()->bind($response['data'])
+                {{ Aire::open()->class('form-horizontal')->id('user_update')->put()->bind($response['data'])
                       ->rules([
                         'password' => 'required|min:8',
                         'first_name' => 'required',
@@ -52,7 +52,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            {{ Aire::select([], 'cloneprojectid', 'Clone Project')->addClass('form-control')->id('clone_project') }}
+                            {{ Aire::select([], 'clone_project_id', 'Clone Project')->addClass('form-control')->id('clone_project') }}
                         </div>
                     </div>
                 </div>
@@ -70,7 +70,8 @@
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">Current Projects</h3>
-                    <a class="float-right btn-xs btn-primary" onclick="updateIndex(this)" href="javascript:void(0)">Update Index</a>
+                    <a class="float-right btn-xs btn-primary" onclick="updateIndex(this)" href="javascript:void(0)">Update
+                        Index</a>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body p-0">
@@ -84,7 +85,9 @@
                         <tbody>
                         @foreach($response['data']['projects'] as $project)
                             <tr>
-                                <td><input type="checkbox" class="project_id" value="{{$project['id']}}"></td>
+                                <td>
+                                    <input type="checkbox" class="project_id" {{$project['elasticsearch'] ? 'checked' : ''}} value="{{$project['id']}}">
+                                </td>
                                 <td><a href="{{config('app.frontend_url')}}/project/preview2/{{$project['id']}}"
                                        target="_blank">{{$project['name']}}</a></td>
                             </tr>
@@ -105,7 +108,9 @@
             window.location.href = $(this).data('redirect');
         });
 
-        $(document).ajaxStart(function() { Pace.restart(); });
+        $(document).ajaxStart(function () {
+            Pace.restart();
+        });
 
         // initialize select2 for clone project field
         $("#clone_project").select2({
@@ -144,17 +149,17 @@
         // function for updating the indexes of the project
         function updateIndex(ele) {
             var projects = [];
-            $.each($(".project_id:checked"), function(){
+            $.each($(".project_id:checked"), function () {
                 projects.push($(this).val());
             });
-            if (projects.length){
+            if (projects.length) {
                 success_sel.find('.alert-success').remove();
                 callParams.Type = "POST";
                 callParams.Url = api_url + api_v + "/admin/projects/indexes";
                 // Set Data parameters
                 dataParams.projects = projects;
                 ajaxCall(callParams, dataParams, function (result) {
-                    if (result.message){
+                    if (result.message) {
                         showMessage(result.message);
                     }
                 });
@@ -166,5 +171,20 @@
             $(".project_id:checkbox").prop('checked', $(this).prop("checked"));
         });
 
+        // form submit event prevent
+        $("#user_update").on('submit', function (e){
+            e.preventDefault();
+            success_sel.find('.alert-success').remove();
+            callParams.Type = "POST";
+            callParams.Url = api_url + api_v + "/admin/users/" + '{{$response['data']['id']}}';
+            // Set Data parameters
+            dataParams = $(this).serialize();
+            console.log(dataParams);
+            ajaxCall(callParams, dataParams, function (result) {
+                if (result.message) {
+                    showMessage(result.message);
+                }
+            });
+        });
     </script>
 @endsection

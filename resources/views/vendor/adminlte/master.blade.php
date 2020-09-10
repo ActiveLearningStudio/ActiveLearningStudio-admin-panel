@@ -92,6 +92,15 @@
     var dataParams = {};
     callParams.Type = "Get";
     callParams.DataType = "JSON"; // Return data type e-g Html, Json etc
+
+    // set the header - bearer token
+    $.ajaxSetup({
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader('Authorization', 'Bearer {{session("access_token")}}');
+        }
+    });
+
+    // generic ajax call
     function ajaxCall(callParams, dataParams, callback) {
         err_sel.find('.alert-danger').remove();
         $.ajax({
