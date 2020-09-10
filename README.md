@@ -55,6 +55,7 @@ php artisan migrate
 - [Admin LTE](https://github.com/jeroennoten/Laravel-AdminLTE/) (Version 3)
 - [DataTables](https://github.com/yajra/laravel-datatables) (version 9)
 - [Laravel UI](https://github.com/laravel/ui) (version 2.2)
+- [Laravel form builder](https://github.com/glhd/aire) (version 2.3)
 
 ## Credits
 
