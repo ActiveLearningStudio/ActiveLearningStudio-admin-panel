@@ -85,7 +85,9 @@
 @endif
 <script>
     var api_url = '{{api_url()}}';
+    var api_v = '/v1';
     var err_sel = $(".container-fluid:first");
+    var success_sel = err_sel;
     var callParams = {};
     var dataParams = {};
     callParams.Type = "Get";
@@ -127,6 +129,14 @@
             }
         });
         err_sel.append('<div class="alert alert-danger"><ul>' + errors_li + '</ul></div>');
+    }
+
+    /**
+     * Generic function for showing the success message
+     * @param message
+     */
+    function showMessage(message) {
+        success_sel.append('<div class="alert alert-success"><ul>' + message + '</ul></div>');
     }
 </script>
 {{-- Custom Scripts --}}
