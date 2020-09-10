@@ -16,9 +16,20 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-
+Route::redirect('home', 'admin/dashboard');
 Auth::routes();
+Route::post('custom/login', 'Auth\LoginController@customLogin');
 
-Route::get('/home', function() {
-    return view('home');
-})->name('home')->middleware('auth');
+/**
+ * Admin Auth Routes
+ */
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], function()
+{
+    // Dashboard
+    Route::get('/dashboard', function() {
+        return view('dashboard');
+    })->name('dashboard');
+
+    // users
+    Route::resource('users', 'User\UserController');
+});

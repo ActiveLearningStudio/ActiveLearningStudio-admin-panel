@@ -188,13 +188,13 @@ return [
 
     'use_route_url' => false,
 
-    'dashboard_url' => 'home',
+    'dashboard_url' => 'admin/dashboard',
 
     'logout_url' => 'logout',
 
-    'login_url' => 'login',
+    'login_url' => 'custom/login',
 
-    'register_url' => 'register',
+    'register_url' => '',
 
     'password_reset_url' => 'password/reset',
 
@@ -237,13 +237,8 @@ return [
             'topnav' => true,
         ],
         [
-            'text' => 'blog',
-            'url'  => 'admin/blog',
-            'can'  => 'manage-blog',
-        ],
-        [
             'text'        => 'Dashboard',
-            'url'         => '#',
+            'url'         => 'admin/dashboard',
             'icon'        => 'fa fa-fw fa-home',
 //            'label'       => 4,
             'label_color' => 'success',
@@ -255,15 +250,15 @@ return [
             'submenu' => [
                 [
                     'text' => 'All Users',
-                    'url'  => '#',
+                    'url'  => 'admin/users',
                 ],
                 [
                     'text' => 'Add User',
-                    'url'  => '#',
+                    'url'  => 'admin/users/create',
                 ],
                 [
                     'text' => 'Bulk Users',
-                    'url'  => '#',
+                    'url'  => 'admin/users/bulk/create',
                 ],
             ],
         ],
@@ -321,22 +316,22 @@ return [
 
     'plugins' => [
         'Datatables' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
-                    'asset' => false,
-                    'location' => '//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables/js/jquery.dataTables.min.js',
                 ],
                 [
                     'type' => 'js',
-                    'asset' => false,
-                    'location' => '//cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables/js/dataTables.bootstrap4.min.js',
                 ],
                 [
                     'type' => 'css',
-                    'asset' => false,
-                    'location' => '//cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css',
+                    'asset' => true,
+                    'location' => 'vendor/datatables/css/dataTables.bootstrap4.min.css',
                 ],
             ],
         ],

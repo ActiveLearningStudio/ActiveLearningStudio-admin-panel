@@ -1,0 +1,17 @@
+.btn-sm-app {
+    border-radius: 10px;
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    font-size: 12px;
+    height: 45px;
+    margin: 0 5px 0px 5px;
+    min-width: 50px;
+    padding: 5px 5px;
+    position: relative;
+    text-align: center;
+    display: inline-block;
+}
+.btn-sm-app>.fas, .btn-sm-app>.glyphicon, .btn-sm-app>.ion {
+    display: block;
+    font-size: 15px;
+}
