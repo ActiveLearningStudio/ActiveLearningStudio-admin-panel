@@ -64,11 +64,12 @@ trait RequestTrait
      */
     public function getError(): string
     {
-        $error = "REMOTE SERVER ERROR!";
+        $error = 'Something went wrong, try again later!';
         if (isset($this->response->json()['errors'])) {
             $error = implode("<br>", $this->response->json()['errors']);
         }
         Log::info($error);
+        Log::info($this->response->json());
         return $error;
     }
 }

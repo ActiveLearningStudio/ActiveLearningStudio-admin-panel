@@ -156,7 +156,7 @@
 
             success_sel.find('.alert-success').remove();
             callParams.Type = "POST";
-            callParams.Url = api_url + api_v + "/admin/projects/indexes";
+            callParams.Url = api_url + api_v + "/admin/projects/indexes/" + '{{$response['data']['id']}}';
             // Set Data parameters
             dataParams.projects = projects;
             ajaxCall(callParams, dataParams, function (result) {
