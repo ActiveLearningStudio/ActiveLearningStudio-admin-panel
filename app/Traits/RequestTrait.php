@@ -53,7 +53,7 @@ trait RequestTrait
      */
     public function deleteHTTP($end_point, $params = [])
     {
-        $this->response = Http::withHeaders($this->headers)->delete(api_url() . $this->apiV . $end_point)->withToken(session('access_token'));
+        $this->response = Http::withToken(session('access_token'))->withHeaders($this->headers)->delete(api_url() . $this->apiV . $end_point);
 //        dd($this->response, $this->response->body());
         throw_if($this->response->failed() || $this->response->serverError(), new GeneralException($this->getError()));
         return $this->response->json();

@@ -23,7 +23,7 @@ Route::post('custom/login', 'Auth\LoginController@customLogin');
 /**
  * Admin Auth Routes
  */
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], function()
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'check.token']], function()
 {
     // Dashboard
     Route::get('/dashboard', function() {

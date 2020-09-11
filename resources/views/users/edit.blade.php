@@ -23,7 +23,6 @@
                 <!-- form start -->
                 {{ Aire::open()->class('form-horizontal')->id('user_update')->put()->bind($response['data'])
                       ->rules([
-                        'password' => 'required|min:8',
                         'first_name' => 'required',
                         'last_name' => 'required',
                         'email' => 'required|email',
@@ -47,7 +46,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            {{ Aire::password('password', 'Password')->id('password')->addClass('form-control')->required() }}
+                            {{ Aire::password('password', 'Password')->id('password')->addClass('form-control') }}
                         </div>
                     </div>
                     <div class="form-group row">
@@ -86,7 +85,8 @@
                         @foreach($response['data']['projects'] as $project)
                             <tr>
                                 <td>
-                                    <input type="checkbox" class="project_id" {{$project['elasticsearch'] ? 'checked' : ''}} value="{{$project['id']}}">
+                                    <input type="checkbox" class="project_id"
+                                           {{$project['elasticsearch'] ? 'checked' : ''}} value="{{$project['id']}}">
                                 </td>
                                 <td><a href="{{config('app.frontend_url')}}/project/preview2/{{$project['id']}}"
                                        target="_blank">{{$project['name']}}</a></td>
@@ -115,6 +115,7 @@
         // initialize select2 for clone project field
         $("#clone_project").select2({
             theme: 'bootstrap4',
+            // allowClear: true,  currently not working - need to debug
             minimumInputLength: 0,
             ajax: {
                 url: '{{api_url().'/v1/admin/projects'}}',
@@ -152,18 +153,17 @@
             $.each($(".project_id:checked"), function () {
                 projects.push($(this).val());
             });
-            if (projects.length) {
-                success_sel.find('.alert-success').remove();
-                callParams.Type = "POST";
-                callParams.Url = api_url + api_v + "/admin/projects/indexes";
-                // Set Data parameters
-                dataParams.projects = projects;
-                ajaxCall(callParams, dataParams, function (result) {
-                    if (result.message) {
-                        showMessage(result.message);
-                    }
-                });
-            }
+
+            success_sel.find('.alert-success').remove();
+            callParams.Type = "POST";
+            callParams.Url = api_url + api_v + "/admin/projects/indexes";
+            // Set Data parameters
+            dataParams.projects = projects;
+            ajaxCall(callParams, dataParams, function (result) {
+                if (result.message) {
+                    showMessage(result.message);
+                }
+            });
         }
 
         // check and uncheck all
@@ -172,19 +172,29 @@
         });
 
         // form submit event prevent
-        $("#user_update").on('submit', function (e){
+        $("#user_update").on('submit', function (e) {
             e.preventDefault();
+            let pass_sel = $("#password");
             success_sel.find('.alert-success').remove();
+
+            // if empty value
+            if (!pass_sel.val()) {
+                pass_sel.attr('disabled', true);
+            }
+
             callParams.Type = "POST";
             callParams.Url = api_url + api_v + "/admin/users/" + '{{$response['data']['id']}}';
             // Set Data parameters
             dataParams = $(this).serialize();
-            console.log(dataParams);
             ajaxCall(callParams, dataParams, function (result) {
                 if (result.message) {
                     showMessage(result.message);
                 }
+                if ($("#clone_project").val()){
+                    location.reload();
+                }
             });
+            pass_sel.removeAttr('disabled');
         });
     </script>
 @endsection

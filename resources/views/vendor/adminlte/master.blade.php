@@ -137,7 +137,8 @@
                 errors_li += '<li>' + val[0] + '</li>';
             }
         });
-        err_sel.append('<div class="alert alert-danger"><ul>' + errors_li + '</ul></div>');
+        err_sel.append('<div class="alert alert-danger"><ul>' + errors_li + '</ul></div>').scrollTop();
+        $(window).scrollTop(success_sel.scrollTop()); // scroll to the message
     }
 
     /**
@@ -145,7 +146,8 @@
      * @param message
      */
     function showMessage(message) {
-        success_sel.append('<div class="alert alert-success"><ul>' + message + '</ul></div>');
+        success_sel.append('<div class="alert alert-success"><p>' + message + '</p></div>');
+        $(window).scrollTop(success_sel.scrollTop()); // scroll to the message
     }
 </script>
 {{-- Custom Scripts --}}
