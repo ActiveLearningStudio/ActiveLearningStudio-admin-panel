@@ -17,6 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::redirect('home', 'admin/dashboard');
+Route::redirect('/', 'login');
 Auth::routes();
 Route::post('custom/login', 'Auth\LoginController@customLogin');
 
@@ -32,4 +33,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'c
 
     // users
     Route::resource('users', 'User\UserController');
+    // lms-settings
+    Route::resource('lms-settings', 'LmsSetting\LmsSettingController');
 });

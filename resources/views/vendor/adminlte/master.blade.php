@@ -149,6 +149,21 @@
         success_sel.append('<div class="alert alert-success"><p>' + message + '</p></div>');
         $(window).scrollTop(success_sel.scrollTop()); // scroll to the message
     }
+
+    /**
+     * Reset the form data
+     * @param target
+     */
+    function resetForm(target){
+        $(target).trigger("reset");
+        $(".form-control").removeClass("is-valid");
+        $(".valid-feedback").remove();
+    }
+
+    // pace restart for ajax request
+    // $(document).ajaxStart(function () {
+    //     Pace.restart();
+    // });
 </script>
 {{-- Custom Scripts --}}
 @yield('js')
