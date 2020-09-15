@@ -243,7 +243,6 @@ return [
 //            'label'       => 4,
             'label_color' => 'success',
         ],
-        "USERS",
         [
             'text'    => 'Users',
             'icon'    => 'fas fa-fw fa-user',
@@ -256,9 +255,23 @@ return [
                     'text' => 'Add User',
                     'url'  => 'admin/users/create',
                 ],
-                [
+             /*   [
                     'text' => 'Bulk Users',
                     'url'  => 'admin/users/bulk/create',
+                ],*/
+            ],
+        ],
+        [
+            'text'    => 'LMS SETTINGS',
+            'icon'    => 'fas fa-fw fa-user',
+            'submenu' => [
+                [
+                    'text' => 'All Settings',
+                    'url'  => 'admin/lms-settings',
+                ],
+                [
+                    'text' => 'Create Setting',
+                    'url'  => 'admin/lms-settings/create',
                 ],
             ],
         ],

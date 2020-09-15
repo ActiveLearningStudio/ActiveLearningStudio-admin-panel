@@ -46,7 +46,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            {{ Aire::password('password', 'Password')->id('password')->addClass('form-control') }}
+                            {{ Aire::password('password', 'Password')->id('password')->addClass('form-control')->placeholder('Leave Blank for unchanged.') }}
                         </div>
                     </div>
                     <div class="form-group row">
@@ -88,7 +88,7 @@
                                     <input type="checkbox" class="project_id"
                                            {{$project['elasticsearch'] ? 'checked' : ''}} value="{{$project['id']}}">
                                 </td>
-                                <td><a href="{{config('app.frontend_url')}}/project/preview2/{{$project['id']}}"
+                                <td><a href="{{config('app.frontend_url')}}project/{{$project['id']}}/shared"
                                        target="_blank">{{$project['name']}}</a></td>
                             </tr>
                         @endforeach
@@ -108,17 +108,13 @@
             window.location.href = $(this).data('redirect');
         });
 
-        $(document).ajaxStart(function () {
-            Pace.restart();
-        });
-
         // initialize select2 for clone project field
         $("#clone_project").select2({
             theme: 'bootstrap4',
             // allowClear: true,  currently not working - need to debug
             minimumInputLength: 0,
             ajax: {
-                url: '{{api_url().'/v1/admin/projects'}}',
+                url: api_url + api_v + "/admin/projects",
                 dataType: 'json',
                 type: "GET",
                 delay: 500,
