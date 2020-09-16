@@ -20,6 +20,6 @@ if (! function_exists('api_url')) {
      */
     function api_url()
     {
-       return env('API_URL', 'http://localhost:8001/api');
+       return config('app.api_url');
     }
 }
