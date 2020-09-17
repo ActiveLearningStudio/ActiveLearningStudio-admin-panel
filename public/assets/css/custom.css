@@ -21,3 +21,6 @@
 .toasts-top-right{
     z-index: 1051;
 }
+button.btn.btn-warning.dropdown-toggle.dropdown-icon:hover {
+    z-index: 10;
+}

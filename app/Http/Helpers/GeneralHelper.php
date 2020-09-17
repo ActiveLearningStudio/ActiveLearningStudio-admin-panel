@@ -40,10 +40,10 @@ if (! function_exists('validate_api_url')){
     /**
      * @param $url
      * @return string
-     * Embeds the API base URL if not already embedded
+     * Embeds the API base URL if not already embedded or proper url
      */
     function validate_api_url($url){
-        if (strpos($url, api_url()) === false){
+        if (strpos($url, api_url()) === false && filter_var($url, FILTER_VALIDATE_URL) === false){
             return api_url() . $url;
         }
         return $url;
@@ -54,10 +54,10 @@ if (! function_exists('validate_frontend_url')){
     /**
      * @param $url
      * @return string
-     * Embeds the forntend base URL if not already embedded
+     * Embeds the forntend base URL if not already embedded or proper url
      */
     function validate_frontend_url($url){
-        if (strpos($url, frontend_url()) === false){
+        if (strpos($url, frontend_url()) === false && filter_var($url, FILTER_VALIDATE_URL) === false){
             return frontend_url() . $url;
         }
         return $url;
