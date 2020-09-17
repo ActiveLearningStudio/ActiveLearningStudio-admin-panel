@@ -73,7 +73,7 @@
                     {data: 'email', name: 'email'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
                 ],
-                "order": [[ 2, "asc" ]]
+                "order": [[ 0, "asc" ]]
             });
         });
 
