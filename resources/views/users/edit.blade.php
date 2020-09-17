@@ -53,7 +53,7 @@
                         <div class="col-sm-12">
                             {{ Aire::select([], 'clone_project_id', 'Clone Project')->addClass('form-control')->id('clone_project') }}
                         </div>
-                    </div>
+                    </div> 
                 </div>
 
                 <!-- /.card-body -->

@@ -63,7 +63,7 @@
                             {{ Aire::input('password', 'Password')->id('password')->addClass('form-control')->required() }}
                         </div>
                     </div>
-                </div>
+                </div> 
 
                 <!-- /.card-body -->
                 <div class="card-footer">
