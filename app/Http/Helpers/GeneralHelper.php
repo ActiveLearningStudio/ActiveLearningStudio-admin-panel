@@ -57,7 +57,7 @@ if (! function_exists('validate_api_url')){
      */
     function validate_api_url($url, $type = 'img'){
         $baseUrl = $type === 'api' ? api_url() : api_img_url();
-        if (strpos($url, api_url()) === false && filter_var($url, FILTER_VALIDATE_URL) === false){
+        if (filter_var($url, FILTER_VALIDATE_URL) === false){
             return $baseUrl . $url;
         }
         return $url;
@@ -68,10 +68,10 @@ if (! function_exists('validate_frontend_url')){
     /**
      * @param $url
      * @return string
-     * Embeds the forntend base URL if not already embedded or proper url
+     * Embeds the frontend base URL if not already embedded or proper url
      */
     function validate_frontend_url($url){
-        if (strpos($url, frontend_url()) === false && filter_var($url, FILTER_VALIDATE_URL) === false){
+        if (filter_var($url, FILTER_VALIDATE_URL) === false){
             return frontend_url() . $url;
         }
         return $url;
