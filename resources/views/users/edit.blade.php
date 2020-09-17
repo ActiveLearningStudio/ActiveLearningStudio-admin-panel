@@ -46,7 +46,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            {{ Aire::password('password', 'Password')->id('password')->addClass('form-control')->placeholder('Leave Blank for unchanged.') }}
+                            {{ Aire::input('password', 'Password')->id('password')->addClass('form-control')->placeholder('Leave Blank for unchanged.') }}
                         </div>
                     </div>
                     <div class="form-group row">

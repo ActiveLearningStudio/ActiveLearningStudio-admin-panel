@@ -60,7 +60,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            {{ Aire::password('password', 'Password')->id('password')->addClass('form-control')->required() }}
+                            {{ Aire::input('password', 'Password')->id('password')->addClass('form-control')->required() }}
                         </div>
                     </div>
                 </div>
