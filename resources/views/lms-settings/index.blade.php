@@ -77,7 +77,7 @@
         function destroy_data(id){
             if (confirm('Are you sure?')){
                 success_sel.find('.alert-success').remove();
-                callParams.Type = "DELETE";
+                resetAjaxParams( "DELETE");
                 callParams.Url = api_url + api_v + "/admin/lms-settings/" + id;
                 ajaxCall(callParams, dataParams, function (result) {
                     if (result.message) {

@@ -3,6 +3,11 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Throwable;
 
 /**
@@ -38,11 +43,14 @@ class GeneralException extends Exception
     /**
      * Render the exception into an HTTP response.
      *
-     * @param \Illuminate\Http\Request
-     * @return \Illuminate\Http\RedirectResponse
+     * @param Request
+     * @return Application|ResponseFactory|RedirectResponse|Response
      */
     public function render($request)
     {
+        if ($request->ajax() || $request->is('api/*') || $request->wantsJson()) {
+            return response(['errors' => [$this->message],], 500);
+        }
         // All instances of GeneralException redirect back with a flash message to show a bootstrap alert-error
         return redirect()
             ->back()

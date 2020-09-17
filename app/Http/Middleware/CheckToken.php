@@ -17,6 +17,7 @@ class CheckToken
     {
         if (! session('access_token')) {
             auth()->logout();
+            return redirect('login');
         }
         return $next($request);
     }

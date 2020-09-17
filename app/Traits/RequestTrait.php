@@ -72,4 +72,19 @@ trait RequestTrait
         Log::info($this->response->json());
         return $error;
     }
+
+    /**
+     * For non-admin api request
+     */
+    public function setNonAdminApiV(): void
+    {
+        $this->apiV = '/v1';
+    }
+
+    /**
+     * For admin API endpoints requests
+     */
+    public function setAdminApiV(){
+        $this->apiV = '/v1/admin';
+    }
 }

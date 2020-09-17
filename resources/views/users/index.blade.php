@@ -37,7 +37,8 @@
                                 <table class="table table-bordered table-striped dataTable" role="grid">
                                     <thead>
                                     <tr role="row">
-                                        <th>Name</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
                                         <th>Email</th>
                                         <th>Action</th>
                                     </tr>
@@ -67,10 +68,12 @@
                 deferRender: true,
                 ajax: "{{ route('admin.users.index') }}",
                 columns: [
-                    {data: 'name', name: 'name'},
+                    {data: 'first_name', name: 'first_name'},
+                    {data: 'last_name', name: 'last_name'},
                     {data: 'email', name: 'email'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
-                ]
+                ],
+                "order": [[ 2, "asc" ]]
             });
         });
 
@@ -78,7 +81,7 @@
         function destroy_data(id){
             if (confirm('Are you sure?')){
                 success_sel.find('.alert-success').remove();
-                callParams.Type = "DELETE";
+                resetAjaxParams( "DELETE");
                 callParams.Url = api_url + api_v + "/admin/users/" + id;
                 ajaxCall(callParams, dataParams, function (result) {
                     if (result.message) {

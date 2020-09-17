@@ -128,3 +128,9 @@ table.dataTable{clear:both;margin-top:6px !important;margin-bottom:6px !importan
     display: block;
     font-size: 15px;
 }
+.toast{
+	min-width: 400px;
+}
+.toasts-top-right{
+    z-index: 1051;
+}

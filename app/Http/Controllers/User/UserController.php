@@ -83,4 +83,10 @@ class UserController extends Controller
         $this->deleteHTTP($this->end_point.'/'.$id);
         return view('users.index');
     }
+
+    public function projectPreviewModal($id){
+        $response = $this->getHTTP('/projects/'.$id.'/load-shared');
+        $html = view('users.partials.preview-modal', ['project' => $response['data']])->render();
+        return response(['html' => $html], 200);
+    }
 }

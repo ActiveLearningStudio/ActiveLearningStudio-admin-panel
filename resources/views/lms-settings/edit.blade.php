@@ -137,7 +137,7 @@
         $("#lms-settings-form").on('submit', function (e) {
             e.preventDefault();
             success_sel.find('.alert-success').remove();
-            callParams.Type = "PUT";
+            resetAjaxParams( "PUT");
             callParams.Url = api_url + api_v + "/admin/lms-settings/" + {{$response['data']['id']}};
             // Set Data parameters
             dataParams = $(this).serialize();

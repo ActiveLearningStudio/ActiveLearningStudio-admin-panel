@@ -137,17 +137,44 @@
                 errors_li += '<li>' + val[0] + '</li>';
             }
         });
-        err_sel.append('<div class="alert alert-danger"><ul>' + errors_li + '</ul></div>').scrollTop();
-        $(window).scrollTop(success_sel.scrollTop()); // scroll to the message
+        showMessage(errors_li, 'error');
+        // err_sel.append('<div class="alert alert-danger"><ul>' + errors_li + '</ul></div>').scrollTop();
+        // $(window).scrollTop(success_sel.scrollTop()); // scroll to the message
     }
 
     /**
-     * Generic function for showing the success message
+     * Generic function for showing the success/error message
      * @param message
+     * @param type
+     * @param title
+     * @param addClass
+     * @param icon
      */
-    function showMessage(message) {
-        success_sel.append('<div class="alert alert-success"><p>' + message + '</p></div>');
-        $(window).scrollTop(success_sel.scrollTop()); // scroll to the message
+    function showMessage(message, type = 'success', title = 'SUCCESS', addClass = 'bg-success', icon = 'fa fa-check') {
+        $("#toastsContainerTopRight").remove();
+        if (type === 'error'){
+            addClass = 'bg-danger';
+            title = 'ERROR';
+            icon = 'fa fa-exclamation-triangle';
+        }
+        $(document).Toasts('create', {
+            title: title,
+            class: addClass,
+            icon: icon,
+            body: message,
+        });
+        // success_sel.append('<div class="alert alert-success"><p>' + message + '</p></div>');
+        // $(window).scrollTop(success_sel.scrollTop()); // scroll to the message
+    }
+
+    /**
+     * Reset ajax call and data params
+     */
+    function resetAjaxParams(type = 'Get'){
+        callParams = {};
+        dataParams = {};
+        callParams.Type = type;
+        callParams.DataType = "JSON";
     }
 
     /**
@@ -159,6 +186,13 @@
         $(".form-control").removeClass("is-valid");
         $(".valid-feedback").remove();
     }
+
+    // toggle text same like class
+    $.fn.extend({
+        toggleText: function(a, b){
+            return this.text((this.text()).trim() === b ? a : b);
+        }
+    });
 
     // pace restart for ajax request
     // $(document).ajaxStart(function () {

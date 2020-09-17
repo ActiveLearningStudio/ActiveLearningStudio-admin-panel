@@ -69,7 +69,7 @@
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">Current Projects</h3>
-                    <a class="float-right btn-xs btn-primary" onclick="updateIndex(this)" href="javascript:void(0)">Update
+                    <a class="float-right btn-xs btn-primary" onclick="updateIndexes(this)" href="javascript:void(0)">Update
                         Index</a>
                 </div>
                 <!-- /.card-header -->
@@ -88,8 +88,11 @@
                                     <input type="checkbox" class="project_id"
                                            {{$project['elasticsearch'] ? 'checked' : ''}} value="{{$project['id']}}">
                                 </td>
-                                <td><a href="{{config('app.frontend_url')}}project/{{$project['id']}}/shared"
-                                       target="_blank">{{$project['name']}}</a></td>
+                                {{-- <td><a href="{{config('app.frontend_url')}}project/{{$project['id']}}/shared"
+                                        target="_blank">{{$project['name']}}</a></td>   --}}
+                                <td><a class="modal-preview" data-target="#preview-project" href="javascript:void(0)"
+                                       data-href="{{route('admin.users.project-preview.modal', $project['id'])}}">{{$project['name']}}</a>
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -99,6 +102,7 @@
             </div>
         </div>
     </div>
+    @include('layouts.base-modal', ['modal' => ['id' => 'preview-project', 'class' => 'modal-xl', 'title' => 'Preview Project']])
 @stop
 @section('js')
     <script type="text/javascript">
@@ -123,6 +127,7 @@
                     return {
                         q: params.term,
                         type: 'public',
+                        users: true,
                         page: params.page || 1
                     };
                 },
@@ -130,10 +135,15 @@
                     var projects = data.data;
                     return {
                         results: $.map(projects, function (item) {
+                            var emails = "";
+                            (item.users).forEach(function (user) {
+                                emails = emails ? emails + ", " + user.email : user.email;
+                            });
                             return {
-                                text: item.name,
-                                id: item.id
+                                text: item.name + " - ( " + emails + ")",
+                                id: item.id,
                             }
+
                         }),
                         pagination: {
                             more: data.links.next
@@ -144,14 +154,14 @@
         });
 
         // function for updating the indexes of the project
-        function updateIndex(ele) {
+        function updateIndexes(ele) {
             var projects = [];
             $.each($(".project_id:checked"), function () {
                 projects.push($(this).val());
             });
 
             success_sel.find('.alert-success').remove();
-            callParams.Type = "POST";
+            resetAjaxParams("POST");
             callParams.Url = api_url + api_v + "/admin/projects/indexes/" + '{{$response['data']['id']}}';
             // Set Data parameters
             dataParams.projects = projects;
@@ -170,6 +180,7 @@
         // form submit event prevent
         $("#user_update").on('submit', function (e) {
             e.preventDefault();
+            resetAjaxParams("POST");
             let pass_sel = $("#password");
             success_sel.find('.alert-success').remove();
 
@@ -178,7 +189,6 @@
                 pass_sel.attr('disabled', true);
             }
 
-            callParams.Type = "POST";
             callParams.Url = api_url + api_v + "/admin/users/" + '{{$response['data']['id']}}';
             // Set Data parameters
             dataParams = $(this).serialize();
@@ -186,11 +196,41 @@
                 if (result.message) {
                     showMessage(result.message);
                 }
-                if ($("#clone_project").val()){
+                if ($("#clone_project").val()) {
                     location.reload();
                 }
             });
             pass_sel.removeAttr('disabled');
         });
+
+        // load preview modal data dynamically
+        $(".modal-preview").on("click", function (e) {
+            e.preventDefault();
+            resetAjaxParams();
+            let target = $(this).data('target');
+            callParams.Url = $(this).data('href');
+            ajaxCall(callParams, dataParams, function (result) {
+                $(target).modal('show');
+                if (!result.html) {
+                    $(target).find('.modal-body').html('Data not found!');
+                    return false;
+                }
+                $(target).find('.modal-body').html(result.html);
+            });
+        });
+
+        // toggle elastic search status for single project
+        function updateIndex(ele, id) {
+            resetAjaxParams();
+            callParams.Url = api_url + api_v + "/admin/projects/" + id + "/index";
+            ajaxCall(callParams, dataParams, function (result) {
+                $(ele).toggleText('Index', 'Remove Index'); // toggle the button text
+                let projectCheckBox =  $(".project_id[value=" + id + "]");
+                projectCheckBox.prop('checked',  !projectCheckBox.prop("checked")); // check uncheck the relevant checkbox
+                if (result.message) {
+                    showMessage(result.message);
+                }
+            });
+        }
     </script>
 @endsection
