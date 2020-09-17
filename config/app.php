@@ -54,6 +54,7 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
     'api_url' => env('API_URL', 'http://localhost:8001/api'),
+    'api_img_url' => env('API_IMG_URL', 'https://www.currikistudio.org/api'),
     'frontend_url' => env('FRONT_END_URL', 'https://www.currikistudio.org'),
 
     'asset_url' => env('ASSET_URL', null),

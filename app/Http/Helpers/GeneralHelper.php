@@ -24,6 +24,18 @@ if (! function_exists('api_url')) {
     }
 }
 
+if (! function_exists('api_img_url')) {
+    /**
+     * Return the api url set in config
+     *
+     * @return string
+     */
+    function api_img_url()
+    {
+       return config('app.api_img_url');
+    }
+}
+
 if (! function_exists('frontend_url')) {
     /**
      * Return the frontend url set in config
@@ -39,12 +51,14 @@ if (! function_exists('frontend_url')) {
 if (! function_exists('validate_api_url')){
     /**
      * @param $url
+     * @param string $type
      * @return string
      * Embeds the API base URL if not already embedded or proper url
      */
-    function validate_api_url($url){
+    function validate_api_url($url, $type = 'img'){
+        $baseUrl = $type === 'api' ? api_url() : api_img_url();
         if (strpos($url, api_url()) === false && filter_var($url, FILTER_VALIDATE_URL) === false){
-            return api_url() . $url;
+            return $baseUrl . $url;
         }
         return $url;
     }
