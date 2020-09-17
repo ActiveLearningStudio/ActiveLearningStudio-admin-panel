@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Traits;
 
 use Illuminate\Http\RedirectResponse;
@@ -68,8 +69,10 @@ trait RequestTrait
         if (isset($this->response->json()['errors'])) {
             $error = implode("<br>", $this->response->json()['errors']);
         }
-        Log::info($error);
-        Log::info($this->response->json());
+        if ($this->response->status() !== 200) {
+            Log::info($error);
+            Log::info($this->response->json());
+        }
         return $error;
     }
 
@@ -84,7 +87,8 @@ trait RequestTrait
     /**
      * For admin API endpoints requests
      */
-    public function setAdminApiV(){
+    public function setAdminApiV()
+    {
         $this->apiV = '/v1/admin';
     }
 }
