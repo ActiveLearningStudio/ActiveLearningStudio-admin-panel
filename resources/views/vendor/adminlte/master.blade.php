@@ -97,7 +97,10 @@
     $.ajaxSetup({
         beforeSend: function(xhr) {
             xhr.setRequestHeader('Authorization', 'Bearer {{session("access_token")}}');
-        }
+            $('#overlay').fadeIn();
+        },complete: function(){
+            $('#overlay').fadeOut();
+        },
     });
 
     // generic ajax call
