@@ -16,9 +16,25 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-
+Route::redirect('home', 'admin/dashboard');
+Route::redirect('/', 'login');
 Auth::routes();
+Route::post('custom/login', 'Auth\LoginController@customLogin');
 
-Route::get('/home', function() {
-    return view('home');
-})->name('home')->middleware('auth');
+/**
+ * Admin Auth Routes
+ */
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'check.token']], function()
+{
+    // Dashboard
+    Route::get('/dashboard', function() {
+        return view('dashboard');
+    })->name('dashboard');
+
+    // users
+    Route::resource('users', 'User\UserController');
+    Route::get('users/project-preview/{id}/modal', 'User\UserController@projectPreviewModal')->name('users.project-preview.modal');
+
+    // lms-settings
+    Route::resource('lms-settings', 'LmsSetting\LmsSettingController');
+});

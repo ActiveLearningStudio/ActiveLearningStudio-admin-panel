@@ -21,9 +21,9 @@
 @section('auth_header', __('adminlte::adminlte.login_message'))
 
 @section('auth_body')
+    @include ('layouts.message')
     <form action="{{ $login_url }}" method="post">
         {{ csrf_field() }}
-
         {{-- Email field --}}
         <div class="input-group mb-3">
             <input type="email" name="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}"

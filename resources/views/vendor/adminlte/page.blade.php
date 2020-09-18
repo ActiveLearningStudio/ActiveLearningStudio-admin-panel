@@ -45,6 +45,7 @@
             {{-- Main Content --}}
             <div class="content">
                 <div class="{{ config('adminlte.classes_content') ?: $def_container_class }}">
+                    @include ('layouts.message')
                     @yield('content')
                 </div>
             </div>
