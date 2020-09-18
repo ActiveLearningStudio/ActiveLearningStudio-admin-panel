@@ -53,7 +53,7 @@
                         <div class="col-sm-12">
                             {{ Aire::select([], 'clone_project_id', 'Clone Project')->addClass('form-control')->id('clone_project') }}
                         </div>
-                    </div> 
+                    </div>
                 </div>
 
                 <!-- /.card-body -->
@@ -69,8 +69,10 @@
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">Current Projects</h3>
-                    <a class="float-right btn-xs btn-primary" onclick="updateIndexes(this)" href="javascript:void(0)">Update
-                        Index</a>
+                    @empty(! $response['data']['projects'])
+                        <a class="float-right btn-xs btn-primary" onclick="updateIndexes(this)" href="javascript:void(0)">Update
+                            Index</a>
+                    @endempty
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body p-0">
