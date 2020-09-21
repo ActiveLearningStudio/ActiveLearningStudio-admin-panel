@@ -15,3 +15,8 @@
         </ul>
     </div>
 @endif
+<div id="overlay" style="display:none;">
+    <div class="spinner"></div>
+    <br/>
+    Please wait...
+</div>
