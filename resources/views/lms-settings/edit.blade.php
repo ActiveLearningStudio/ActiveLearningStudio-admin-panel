@@ -24,11 +24,12 @@
                 <!-- form start -->
                 {{ Aire::open()->id('lms-settings-form')->class('form-horizontal')->put()->bind($response['data'])
                     ->rules([
-                        'lms_url' => 'required|url',
-                        'lms_access_token' => 'required|min:20',
-                        'site_name' => 'required',
+                        'lms_url' => 'required|url|max:255',
+                        'lms_access_token' => 'required|min:20|max:255',
+                        'site_name' => 'required|max:255',
+                        'lti_client_id' => 'required|max:255',
                         'user_id' => 'required|integer',
-                        'lms_access_secret' => 'required_with:lms_access_key',
+                        'lms_access_secret' => 'required_with:lms_access_key|max:255',
                         ])
                     }}
                 <div class="card-body">
@@ -45,6 +46,12 @@
                     <div class="form-group row">
                         <div class="col-sm-12">
                             {{ Aire::input('site_name', 'Site Name')->id('site_name')->addClass('form-control')->required() }}
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            {{ Aire::input('lti_client_id', 'LTI Client ID')->id('lti_client_id')->addClass('form-control') }}
                         </div>
                     </div>
                     <div class="form-group row">
