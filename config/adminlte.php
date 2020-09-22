@@ -246,7 +246,7 @@ return [
         'ACTIVITIES',
         [
             'text' => 'TYPES',
-            'icon' => 'fas fa-fw fa-tasks',
+            'icon' => 'fas fa-fw fa-tags',
             'submenu' => [
                 [
                     'text' => 'All Activity Types',
@@ -276,6 +276,7 @@ return [
                 ],
             ],
         ],
+        'OTHERS',
         [
             'text' => 'Users',
             'icon' => 'fas fa-fw fa-user',

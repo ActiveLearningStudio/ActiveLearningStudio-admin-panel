@@ -1,12 +1,12 @@
 @extends('adminlte::page')
 
-@section('title', 'LMS Settings')
+@section('title', 'Activity Item')
 
 @section('content_header')
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-dark">Create LMS Setting</h1>
+                <h1 class="m-0 text-dark">Create Activity Item</h1>
             </div>
         </div>
     </div>
@@ -18,67 +18,79 @@
         <div class="col-8">
             <div class="card card-info">
                 <div class="card-header">
-                    <h3 class="card-title">Create LMS Setting Form</h3>
+                    <h3 class="card-title">Create Activity Item Form</h3>
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                {{ Aire::open()->id('lms-settings-form')->class('form-horizontal')
+                {{ Aire::open()->id('activity-items-form')->class('form-horizontal')
                     ->rules([
-                        'lms_url' => 'required|url',
-                        'lms_access_token' => 'required|min:20',
-                        'site_name' => 'required',
-                        'user_id' => 'required|integer',
-                        'lms_access_secret' => 'required_with:lms_access_key',
+                        'title' => 'required|max:255',
+                        'description' => 'required|max:255',
+                        'demo_activity_id' => 'max:255',
+                        'demo_video_id' => 'max:255',
+                        'image' => 'required',
+                        'order' => 'required|integer',
+                        'activity_type_id' => 'required|integer',
+                        'type' => 'required',
+                        'h5pLib' => 'required_if:type,h5p',
                         ])
                     }}
                 <div class="card-body">
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            {{ Aire::input('lms_url', 'LMS URL')->id('lms_url')->addClass('form-control')->required() }}
+                            {{ Aire::input('title', 'Title')->id('title')->addClass('form-control')->required() }}
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            {{ Aire::input('lms_access_token', 'LMS Access Token')->id('lms_access_token')->addClass('form-control')->required() }}
+                            {{ Aire::textarea('description', 'Description')->id('description')->addClass('form-control')->required() }}
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            {{ Aire::input('site_name', 'Site Name')->id('site_name')->addClass('form-control')->required() }}
+                            {{ Aire::file('image', 'Image')->id('image')->required() }}
+                            <p></p>
+                            <img id="image-preview" src="" alt="Uploaded Image" onerror="this.style.display='none'"
+                                 style="max-width: 150px"/>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            {{ Aire::select(['moodle' => 'Moodle', 'canvas' => 'Canvas'], 'lms_name', 'LMS Name')->id('lms_name')->addClass('form-control') }}
+                            {{ Aire::input('order', 'Order')->id('order')->addClass('form-control')->required() }}
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            {{ Aire::input('lms_access_key', 'Access Key')->id('lms_access_key')->addClass('form-control') }}
+                            {{ Aire::select([], 'activity_type_id', 'Activity Type')->id('activity_type_id')->addClass('form-control')->required() }}
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            {{ Aire::input('lms_access_secret', 'Secret Key')->id('lms_access_secret')->addClass('form-control') }}
+                            {{ Aire::select(['h5p' => 'H5P', 'immersive_reader' => 'Immersive Reader'], 'type', 'Category')->id('type')
+                                ->addClass('form-control')->required() }}
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            {{ Aire::textarea('description', 'Description')->id('description')->addClass('form-control') }}
+                            {{ Aire::input('h5pLib', 'H5P Lib')->id('h5pLib')->addClass('form-control')->placeholder('H5P.InteractiveVideo 1.21') }}
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            {{ Aire::select([], 'user_id', 'User')->id('user_id')->addClass('form-control')->required() }}
+                            {{ Aire::input('demo_video_id', 'Demo Video ID')->id('demo_video_id')->addClass('form-control') }}
                         </div>
                     </div>
-
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            {{ Aire::input('demo_activity_id', 'Demo Activity ID')->id('demo_activity_id')->addClass('form-control') }}
+                        </div>
+                    </div>
                 </div>
 
                 <!-- /.card-body -->
                 <div class="card-footer">
-                    {{Aire::submit('Create User')->addClass('btn btn-info')}}
-                    {{Aire::submit('Cancel')->addClass('btn btn-default float-right cancel')->data('redirect', route('admin.lms-settings.index'))}}
+                    {{Aire::submit('Create Activity Item')->addClass('btn btn-info')}}
+                    {{Aire::submit('Cancel')->addClass('btn btn-default float-right cancel')->data('redirect', route('admin.activity-items.index'))}}
                 </div>
                 <!-- /.card-footer -->
                 {{ Aire::close() }}
@@ -93,13 +105,13 @@
             window.location.href = $(this).data('redirect');
         });
 
-        // get users from api
-        $("#user_id").select2({
+        // get types from api
+        $("#activity_type_id").select2({
             theme: 'bootstrap4',
             // allowClear: true,  currently not working - need to debug
             minimumInputLength: 0,
             ajax: {
-                url: api_url + api_v + "/admin/users",
+                url: api_url + api_v + "/admin/activity-types",
                 dataType: 'json',
                 type: "GET",
                 delay: 500,
@@ -112,11 +124,11 @@
                     };
                 },
                 processResults: function (data) {
-                    var users = data.data;
+                    var types = data.data;
                     return {
-                        results: $.map(users, function (item) {
+                        results: $.map(types, function (item) {
                             return {
-                                text: item.name,
+                                text: item.title,
                                 id: item.id
                             }
                         }),
@@ -129,20 +141,48 @@
         });
 
         // form submit event prevent
-        $("#lms-settings-form").on('submit', function (e) {
+        $("#activity-items-form").on('submit', function (e) {
             e.preventDefault();
-            success_sel.find('.alert-success').remove();
-            callParams.Type = "POST";
-            callParams.Url = api_url + api_v + "/admin/lms-settings";
-            // Set Data parameters
-            dataParams = $(this).serialize();
-            ajaxCall(callParams, dataParams, function (result) {
-                if (result.message) {
-                    showMessage(result.message);
-                    resetForm("#lms-settings-form");
+            $.ajax({
+                url: api_url + api_v + "/admin/activity-items",
+                method: "POST",
+                processData: false, // needed for image upload
+                contentType: false, // needed for image upload
+                data: new FormData(this),
+                dataType: 'json',
+                success: function (result) {
+                    if (result.message) {
+                        showMessage(result.message);
+                        resetForm("#activity-items-form");
+                    }
+                },
+                error: function (response) {
+                    response = JSON.parse(response.responseText);
+                    if (response.errors) {
+                        showErrors(response.errors);
+                    } else {
+                        alert('Something went wrong, try again later!');
+                    }
                 }
             });
         });
 
+        // image preview
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#image-preview').attr('src', e.target.result).show();
+                }
+
+                reader.readAsDataURL(input.files[0]); // convert to base64 string
+            }
+        }
+
+        // on image upload
+        $("#image").change(function () {
+            readURL(this);
+        });
     </script>
 @endsection

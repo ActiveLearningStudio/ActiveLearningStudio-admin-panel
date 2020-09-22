@@ -1,16 +1,16 @@
 @extends('adminlte::page')
 
-@section('title', 'LMS Settings')
+@section('title', 'Activity Types')
 
 @section('content_header')
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-dark">LMS Settings</h1>
+                <h1 class="m-0 text-dark">Activity Types</h1>
             </div>
             <div class="col-sm-6">
                 <div class="float-sm-right">
-                    <a class="btn-sm-app" href="{{route('admin.lms-settings.create')}}">
+                    <a class="btn-sm-app" href="{{route('admin.activity-types.create')}}">
                         <i class="fas fa-plus"></i> Add
                     </a>
                 </div>
@@ -34,9 +34,9 @@
                                 <table class="table table-bordered table-striped dataTable" role="grid">
                                     <thead>
                                     <tr role="row">
-                                        <th>URL</th>
-                                        <th>Type</th>
-                                        <th>User</th>
+                                        <th>Title</th>
+                                        <th>Image</th>
+                                        <th>Order</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
@@ -63,11 +63,11 @@
                 serverSide: true,
                 pageLength: 25,
                 deferRender: true,
-                ajax: "{{ route('admin.lms-settings.index') }}",
+                ajax: "{{ route('admin.activity-types.index') }}",
                 columns: [
-                    {data: 'lms_url', name: 'lms_url'},
-                    {data: 'lms_name', name: 'lms_name'},
-                    {data: 'user.name', name: 'user.name', searchable: false, orderable: false,},
+                    {data: 'title', name: 'title'},
+                    {data: 'image', name: 'image', orderable: false, searchable: false},
+                    {data: 'order', name: 'order'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
                 ]
             });
@@ -78,7 +78,7 @@
             if (confirm('Are you sure?')){
                 success_sel.find('.alert-success').remove();
                 resetAjaxParams( "DELETE");
-                callParams.Url = api_url + api_v + "/admin/lms-settings/" + id;
+                callParams.Url = api_url + api_v + "/admin/activity-types/" + id;
                 ajaxCall(callParams, dataParams, function (result) {
                     if (result.message) {
                         showMessage(result.message);

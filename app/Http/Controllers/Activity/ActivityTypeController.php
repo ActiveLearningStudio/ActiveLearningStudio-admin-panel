@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\LmsSetting;
+namespace App\Http\Controllers\Activity;
 
 use App\Http\Controllers\Controller;
 use App\Traits\RequestTrait;
@@ -11,10 +11,10 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Yajra\DataTables\Facades\DataTables;
 
-class LmsSettingController extends Controller
+class ActivityTypeController extends Controller
 {
     use RequestTrait;
-    protected $end_point = '/lms-settings';
+    protected $end_point = '/activity-types';
 
     /**
      * @param Request $request
@@ -27,13 +27,14 @@ class LmsSettingController extends Controller
             $response = $this->getHTTP($this->end_point, $request->all());
             return DataTables::custom($response['data'])
                 ->setTotalRecords($response['meta']['total'])
+                ->editColumn('image', '<img src="{{validate_api_url($image)}}" style="max-width: 75px">')
                 ->addColumn('action', function ($row) {
-                    return view('lms-settings.partials.action', ['setting' => $row])->render();
+                    return view('activity-types.partials.action', ['activityType' => $row])->render();
                 })
-                ->rawColumns(['action'])
+                ->rawColumns(['action', 'image'])
                 ->make(true);
         }
-        return view('lms-settings.index');
+        return view('activity-types.index');
     }
 
     /**
@@ -41,7 +42,7 @@ class LmsSettingController extends Controller
      */
     public function create()
     {
-        return view('lms-settings.create');
+        return view('activity-types.create');
     }
 
     /**
@@ -52,7 +53,7 @@ class LmsSettingController extends Controller
     public function edit($id)
     {
         $response = $this->getHTTP($this->end_point.'/'.$id.'/edit');
-        return view('lms-settings.edit', ['response' => $response]);
+        return view('activity-types.edit', ['response' => $response]);
     }
 
 }
