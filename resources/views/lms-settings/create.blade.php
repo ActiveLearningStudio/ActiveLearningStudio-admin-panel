@@ -94,61 +94,12 @@
 @stop
 @section('js')
     <script type="text/javascript">
-        $(".cancel").on("click", function (e) {
-            e.preventDefault();
-            window.location.href = $(this).data('redirect');
-        });
+        // initialize select2
+        let url = api_url + api_v + "/admin/users";
+        initializeSelect2("#user_id", url, "name");
 
-        // get users from api
-        $("#user_id").select2({
-            theme: 'bootstrap4',
-            // allowClear: true,  currently not working - need to debug
-            minimumInputLength: 0,
-            ajax: {
-                url: api_url + api_v + "/admin/users",
-                dataType: 'json',
-                type: "GET",
-                delay: 500,
-                data: function (params) {
-                    // Query parameters will be ?search=[term]&type=public&limit=100
-                    return {
-                        q: params.term,
-                        type: 'public',
-                        page: params.page || 1
-                    };
-                },
-                processResults: function (data) {
-                    var users = data.data;
-                    return {
-                        results: $.map(users, function (item) {
-                            return {
-                                text: item.name,
-                                id: item.id
-                            }
-                        }),
-                        pagination: {
-                            more: data.links.next
-                        }
-                    };
-                }
-            }
-        });
-
-        // form submit event prevent
-        $("#lms-settings-form").on('submit', function (e) {
-            e.preventDefault();
-            success_sel.find('.alert-success').remove();
-            callParams.Type = "POST";
-            callParams.Url = api_url + api_v + "/admin/lms-settings";
-            // Set Data parameters
-            dataParams = $(this).serialize();
-            ajaxCall(callParams, dataParams, function (result) {
-                if (result.message) {
-                    showMessage(result.message);
-                    resetForm("#lms-settings-form");
-                }
-            });
-        });
-
+        // form submit
+        url =  api_url + api_v + "/admin/lms-settings";
+        serializedSubmitForm("#lms-settings-form", url);
     </script>
 @endsection

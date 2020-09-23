@@ -101,92 +101,17 @@
 @stop
 @section('js')
     <script type="text/javascript">
-        $(".cancel").on("click", function (e) {
-            e.preventDefault();
-            window.location.href = $(this).data('redirect');
-        });
-
-        // get types from api
-        $("#activity_type_id").select2({
-            theme: 'bootstrap4',
-            // allowClear: true,  currently not working - need to debug
-            minimumInputLength: 0,
-            ajax: {
-                url: api_url + api_v + "/admin/activity-types",
-                dataType: 'json',
-                type: "GET",
-                delay: 500,
-                data: function (params) {
-                    // Query parameters will be ?search=[term]&type=public&limit=100
-                    return {
-                        q: params.term,
-                        type: 'public',
-                        page: params.page || 1
-                    };
-                },
-                processResults: function (data) {
-                    var types = data.data;
-                    return {
-                        results: $.map(types, function (item) {
-                            return {
-                                text: item.title,
-                                id: item.id
-                            }
-                        }),
-                        pagination: {
-                            more: data.links.next
-                        }
-                    };
-                }
-            }
-        });
+        // initialize select2
+        let url = api_url + api_v + "/admin/activity-types";
+        initializeSelect2("#activity_type_id", url);
 
         // set the already selected user option
         var $option = $("<option selected></option>").val('{{$response['data']['activityType']['id']}}').text('{{$response['data']['activityType']['title']}}');
         $('#activity_type_id').append($option).trigger('change');
 
-        // form submit event prevent
-        $("#activity-items-form").on('submit', function (e) {
-            e.preventDefault();
-            $.ajax({
-                url: api_url + api_v + "/admin/activity-items/" + {{$response['data']['id']}},
-                method: "POST",
-                processData: false, // needed for image upload
-                contentType: false, // needed for image upload
-                data: new FormData(this),
-                dataType: 'json',
-                success: function (result) {
-                    if (result.message) {
-                        showMessage(result.message);
-                    }
-                },
-                error: function (response) {
-                    response = JSON.parse(response.responseText);
-                    if (response.errors) {
-                        showErrors(response.errors);
-                    } else {
-                        alert('Something went wrong, try again later!');
-                    }
-                }
-            });
-        });
+        // form submit
+        url = api_url + api_v + "/admin/activity-items/" + {{$response['data']['id']}};
+        multiPartFormSubmission("#activity-items-form", url);
 
-        // image preview
-        function readURL(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-
-                reader.onload = function (e) {
-                    $('#image-preview').attr('src', e.target.result).show();
-                }
-
-                reader.readAsDataURL(input.files[0]); // convert to base64 string
-            }
-        }
-
-        // on image upload
-        $("#image").change(function () {
-            readURL(this);
-        });
     </script>
 @endsection

@@ -22,14 +22,17 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                {{ Aire::open()->route('admin.users.store')->class('form-horizontal')->post()
+                {{ Aire::open()->class('form-horizontal')->post()->id('user-form')
                     ->rules([
-                        'password' => 'required|min:8',
-                        'first_name' => 'required',
-                        'last_name' => 'required',
-                        'organization_name' => 'required',
-                        'job_title' => 'required',
-                        'email' => 'required|email',
+                        'password' => 'required|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/',
+                        'first_name' => 'required|max:255',
+                        'last_name' => 'required|max:255',
+                        'organization_name' => 'max:255',
+                        'job_title' => 'max:255',
+                        'email' => 'required|email|max:255',
+                        ])
+                        ->messages([
+                         'regex' => ':attribute must be 8 characters long, should contain at-least 1 Uppercase, 1 Lowercase and 1 Numeric character.',
                         ])
                     }}
                 <div class="card-body">
@@ -45,12 +48,12 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            {{ Aire::input('organization_name', 'Organization Name')->id('organization_name')->addClass('form-control')->required() }}
+                            {{ Aire::input('organization_name', 'Organization Name')->id('organization_name')->addClass('form-control') }}
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            {{ Aire::input('job_title', 'Job Title')->id('job_title')->addClass('form-control')->required() }}
+                            {{ Aire::input('job_title', 'Job Title')->id('job_title')->addClass('form-control') }}
                         </div>
                     </div>
                     <div class="form-group row">
@@ -63,12 +66,12 @@
                             {{ Aire::input('password', 'Password')->id('password')->addClass('form-control')->required() }}
                         </div>
                     </div>
-                </div> 
+                </div>
 
                 <!-- /.card-body -->
                 <div class="card-footer">
                     {{Aire::submit('Create User')->addClass('btn btn-info')}}
-                    {{Aire::submit('Cancel')->addClass('btn btn-default float-right cancel')}}
+                    {{Aire::submit('Cancel')->addClass('btn btn-default float-right cancel')->data('redirect', route('admin.users.index'))}}
                 </div>
                 <!-- /.card-footer -->
                 {{ Aire::close() }}
@@ -78,8 +81,8 @@
 @stop
 @section('js')
     <script type="text/javascript">
-        $(".cancel").on("click", function (e) {
-            e.preventDefault();
-        });
+        // form submit
+        let url = api_url + api_v + "/admin/users";
+        serializedSubmitForm("#user-form", url);
     </script>
 @endsection

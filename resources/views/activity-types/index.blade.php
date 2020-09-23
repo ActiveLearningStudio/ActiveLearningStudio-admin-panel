@@ -62,6 +62,7 @@
                 processing: true,
                 serverSide: true,
                 pageLength: 25,
+                searchDelay: 800,
                 deferRender: true,
                 ajax: "{{ route('admin.activity-types.index') }}",
                 columns: [
@@ -73,18 +74,11 @@
             });
         });
 
-        // destroy the setting
-        function destroy_data(id){
-            if (confirm('Are you sure?')){
-                success_sel.find('.alert-success').remove();
-                resetAjaxParams( "DELETE");
-                callParams.Url = api_url + api_v + "/admin/activity-types/" + id;
-                ajaxCall(callParams, dataParams, function (result) {
-                    if (result.message) {
-                        showMessage(result.message);
-                        $(".action-group").find("[data-id='" + id + "']").closest('tr').fadeOut('slow');
-                    }
-                });
+        // destroy the activity type
+        function destroy_data(id) {
+            if (confirm('Are you sure?')) {
+                let url = api_url + api_v + "/admin/activity-types/" + id;
+                destroy(url, id); // url and id parameter for fading the element
             }
         }
     </script>

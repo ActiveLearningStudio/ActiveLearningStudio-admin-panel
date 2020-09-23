@@ -63,54 +63,8 @@
 @stop
 @section('js')
     <script type="text/javascript">
-        $(".cancel").on("click", function (e) {
-            e.preventDefault();
-            window.location.href = $(this).data('redirect');
-        });
-
-        // form submit event prevent
-        $("#activity-types-form").on('submit', function (e) {
-            e.preventDefault();
-            $.ajax({
-                url: api_url + api_v + "/admin/activity-types",
-                method: "POST",
-                processData: false, // needed for image upload
-                contentType: false, // needed for image upload
-                data: new FormData(this),
-                dataType: 'json',
-                success: function (result) {
-                    if (result.message) {
-                        showMessage(result.message);
-                        resetForm("#activity-types-form");
-                    }
-                },
-                error: function (response) {
-                    response = JSON.parse(response.responseText);
-                    if (response.errors) {
-                        showErrors(response.errors);
-                    } else {
-                        alert('Something went wrong, try again later!');
-                    }
-                }
-            });
-        });
-
-        // image preview
-        function readURL(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-
-                reader.onload = function (e) {
-                    $('#image-preview').attr('src', e.target.result).show();
-                }
-
-                reader.readAsDataURL(input.files[0]); // convert to base64 string
-            }
-        }
-
-        // on image upload
-        $("#image").change(function () {
-            readURL(this);
-        });
+        // form submit
+        let url = api_url + api_v + "/admin/activity-types";
+        multiPartFormSubmission("#activity-types-form", url);
     </script>
 @endsection

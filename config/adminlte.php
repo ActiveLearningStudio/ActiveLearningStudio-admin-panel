@@ -253,7 +253,7 @@ return [
                     'url' => 'admin/activity-types',
                 ],
                 [
-                    'text' => 'Add Activity Type',
+                    'text' => 'Create Activity Type',
                     'url' => 'admin/activity-types/create',
                 ],
                 /*   [
@@ -286,7 +286,7 @@ return [
                     'url' => 'admin/users',
                 ],
                 [
-                    'text' => 'Add User',
+                    'text' => 'Create User',
                     'url' => 'admin/users/create',
                 ],
                 /*   [
