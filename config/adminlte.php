@@ -237,60 +237,78 @@ return [
             'topnav' => true,
         ],
         [
-            'text'        => 'Dashboard',
-            'url'         => 'admin/dashboard',
-            'icon'        => 'fa fa-fw fa-home',
+            'text' => 'Dashboard',
+            'url' => 'admin/dashboard',
+            'icon' => 'fa fa-fw fa-home',
 //            'label'       => 4,
             'label_color' => 'success',
         ],
+        'ACTIVITIES',
         [
-            'text'    => 'Users',
-            'icon'    => 'fas fa-fw fa-user',
+            'text' => 'TYPES',
+            'icon' => 'fas fa-fw fa-tags',
+            'submenu' => [
+                [
+                    'text' => 'All Activity Types',
+                    'url' => 'admin/activity-types',
+                ],
+                [
+                    'text' => 'Add Activity Type',
+                    'url' => 'admin/activity-types/create',
+                ],
+                /*   [
+                       'text' => 'Bulk Users',
+                       'url'  => 'admin/users/bulk/create',
+                   ],*/
+            ],
+        ],
+        [
+            'text' => 'ITEMS',
+            'icon' => 'fas fa-fw fa-tasks',
+            'submenu' => [
+                [
+                    'text' => 'All Activity Items',
+                    'url' => 'admin/activity-items',
+                ],
+                [
+                    'text' => 'Create Activity Item',
+                    'url' => 'admin/activity-items/create',
+                ],
+            ],
+        ],
+        'OTHERS',
+        [
+            'text' => 'Users',
+            'icon' => 'fas fa-fw fa-user',
             'submenu' => [
                 [
                     'text' => 'All Users',
-                    'url'  => 'admin/users',
+                    'url' => 'admin/users',
                 ],
                 [
                     'text' => 'Add User',
-                    'url'  => 'admin/users/create',
+                    'url' => 'admin/users/create',
                 ],
-             /*   [
-                    'text' => 'Bulk Users',
-                    'url'  => 'admin/users/bulk/create',
-                ],*/
+                /*   [
+                       'text' => 'Bulk Users',
+                       'url'  => 'admin/users/bulk/create',
+                   ],*/
             ],
         ],
         [
-            'text'    => 'LMS SETTINGS',
-            'icon'    => 'fas fa-fw fa-user',
+            'text' => 'LMS SETTINGS',
+            'icon' => 'fas fa-fw fa-cog',
             'submenu' => [
                 [
                     'text' => 'All Settings',
-                    'url'  => 'admin/lms-settings',
+                    'url' => 'admin/lms-settings',
                 ],
                 [
                     'text' => 'Create Setting',
-                    'url'  => 'admin/lms-settings/create',
+                    'url' => 'admin/lms-settings/create',
                 ],
             ],
         ],
-//        ['header' => 'labels'],
-//        [
-//            'text'       => 'important',
-//            'icon_color' => 'red',
-//            'url'        => '#',
-//        ],
-//        [
-//            'text'       => 'warning',
-//            'icon_color' => 'yellow',
-//            'url'        => '#',
-//        ],
-//        [
-//            'text'       => 'information',
-//            'icon_color' => 'cyan',
-//            'url'        => '#',
-//        ],
     ],
 
     /*

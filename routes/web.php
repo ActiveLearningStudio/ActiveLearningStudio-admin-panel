@@ -24,10 +24,9 @@ Route::post('custom/login', 'Auth\LoginController@customLogin');
 /**
  * Admin Auth Routes
  */
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'check.token']], function()
-{
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'check.token']], function () {
     // Dashboard
-    Route::get('/dashboard', function() {
+    Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
 
@@ -37,4 +36,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'c
 
     // lms-settings
     Route::resource('lms-settings', 'LmsSetting\LmsSettingController');
+
+    // activity items
+    Route::resource('activity-items', 'Activity\ActivityItemController');
+
+    // activity types
+    Route::resource('activity-types', 'Activity\ActivityTypeController');
 });
