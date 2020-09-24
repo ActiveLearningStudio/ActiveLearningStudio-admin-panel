@@ -309,6 +309,16 @@ return [
                 ],
             ],
         ],
+        [
+            'text' => 'STATS',
+            'icon' => 'fas fa-chart-bar',
+            'submenu' => [
+                [
+                    'text' => 'All Users',
+                    'url' => 'admin/users/report/basic',
+                ],
+            ],
+        ],
     ],
 
     /*
