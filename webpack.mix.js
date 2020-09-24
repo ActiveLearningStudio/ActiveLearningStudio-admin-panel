@@ -32,6 +32,7 @@ mix.scripts([
     'public/vendor/pace-progress/pace.min.js',
     'public/vendor/select2/js/select2.full.min.js',
     'public/vendor/adminlte/dist/js/adminlte.min.js',
+    'public/assets/js/custom.js',
 ], 'public/assets/js/all.js');
 
 

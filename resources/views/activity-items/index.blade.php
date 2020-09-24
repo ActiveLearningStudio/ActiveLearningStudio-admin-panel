@@ -63,11 +63,12 @@
                 processing: true,
                 serverSide: true,
                 pageLength: 25,
+                searchDelay: 800,
                 deferRender: true,
                 ajax: "{{ route('admin.activity-items.index') }}",
                 columns: [
                     {data: 'title', name: 'title'},
-                    {data: 'image', name: 'image' , orderable: false, searchable: false},
+                    {data: 'image', name: 'image', orderable: false, searchable: false},
                     {data: 'order', name: 'order'},
                     {data: 'meta', name: 'meta', orderable: false, searchable: false},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
@@ -75,18 +76,11 @@
             });
         });
 
-        // destroy the setting
-        function destroy_data(id){
-            if (confirm('Are you sure?')){
-                success_sel.find('.alert-success').remove();
-                resetAjaxParams( "DELETE");
-                callParams.Url = api_url + api_v + "/admin/activity-items/" + id;
-                ajaxCall(callParams, dataParams, function (result) {
-                    if (result.message) {
-                        showMessage(result.message);
-                        $(".action-group").find("[data-id='" + id + "']").closest('tr').fadeOut('slow');
-                    }
-                });
+        // destroy the item
+        function destroy_data(id) {
+            if (confirm('Are you sure?')) {
+                let url = api_url + api_v + "/admin/activity-items/" + id;
+                destroy(url, id); // url and id parameter for fading the element
             }
         }
     </script>

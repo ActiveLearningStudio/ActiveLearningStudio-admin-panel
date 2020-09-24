@@ -10,9 +10,9 @@
             </div>
             <div class="col-sm-6">
                 <div class="float-sm-right">
-{{--                    <a class="btn-sm-app" href="#">--}}
-{{--                        <i class="fas fa-file-import"></i> Import--}}
-{{--                    </a>--}}
+                    {{--                    <a class="btn-sm-app" href="#">--}}
+                    {{--                        <i class="fas fa-file-import"></i> Import--}}
+                    {{--                    </a>--}}
                     <a class="btn-sm-app" href="{{route('admin.users.create')}}">
                         <i class="fas fa-plus"></i> Add
                     </a>
@@ -65,6 +65,7 @@
                 processing: true,
                 serverSide: true,
                 pageLength: 25,
+                searchDelay: 800,
                 deferRender: true,
                 ajax: "{{ route('admin.users.index') }}",
                 columns: [
@@ -73,22 +74,15 @@
                     {data: 'email', name: 'email'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
                 ],
-                "order": [[ 0, "asc" ]]
+                "order": [[0, "asc"]]
             });
         });
 
         // destroy the user
-        function destroy_data(id){
-            if (confirm('Are you sure?')){
-                success_sel.find('.alert-success').remove();
-                resetAjaxParams( "DELETE");
-                callParams.Url = api_url + api_v + "/admin/users/" + id;
-                ajaxCall(callParams, dataParams, function (result) {
-                    if (result.message) {
-                        showMessage(result.message);
-                        $(".action-group").find("[data-id='" + id + "']").closest('tr').fadeOut('slow');
-                    }
-                });
+        function destroy_data(id) {
+            if (confirm('Are you sure?')) {
+                let url = api_url + api_v + "/admin/users/" + id;
+                destroy(url, id); // url and id parameter for fading the element
             }
         }
     </script>

@@ -8,7 +8,6 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
@@ -17,6 +16,7 @@ use Yajra\DataTables\Facades\DataTables;
 class UserController extends Controller
 {
     use RequestTrait;
+
     protected $end_point = '/users';
 
     /**
@@ -54,36 +54,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $response = $this->getHTTP($this->end_point.'/'.$id.'/edit');
+        $response = $this->getHTTP($this->end_point . '/' . $id . '/edit');
         return view('users.edit', ['response' => $response]);
-    }
-
-    /**
-     * @param Request $request
-     * @return Application|Factory|RedirectResponse|View
-     * @throws \Throwable
-     */
-    public function store(Request $request)
-    {
-        $response = $this->postHttp($this->end_point, $request->only('email', 'password', 'name', 'first_name', 'last_name', 'organization_name', 'job_title'));
-
-        // if validations fails
-        if ($response instanceof RedirectResponse){
-            return $response;
-        }
-
-        return view('users.index');
-    }
-
-    /**
-     * @param $id
-     * @return Application|Factory|View
-     * @throws \Throwable
-     */
-    public function destroy($id)
-    {
-        $this->deleteHTTP($this->end_point.'/'.$id);
-        return view('users.index');
     }
 
     /**
@@ -91,8 +63,9 @@ class UserController extends Controller
      * @return Application|ResponseFactory|Response
      * @throws \Throwable
      */
-    public function projectPreviewModal($id){
-        $response = $this->getHTTP('/projects/'.$id.'/load-shared');
+    public function projectPreviewModal($id)
+    {
+        $response = $this->getHTTP('/projects/' . $id . '/load-shared');
         $html = view('users.partials.preview-modal', ['project' => $response['data']])->render();
         return response(['html' => $html], 200);
     }
