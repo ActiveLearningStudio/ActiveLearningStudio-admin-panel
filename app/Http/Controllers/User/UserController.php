@@ -69,4 +69,19 @@ class UserController extends Controller
         $html = view('users.partials.preview-modal', ['project' => $response['data']])->render();
         return response(['html' => $html], 200);
     }
+
+    /**
+     * @param Request $request
+     * @return Application|Factory|View
+     * @throws \Throwable
+     */
+    public function reportBasic(Request $request){
+        if ($request->ajax()) {
+            $response = $this->getHTTP($this->end_point.'/report/basic', $request->all());
+            return DataTables::custom($response['data'])
+                ->setTotalRecords($response['meta']['total'] ?? $response['total'])
+                ->make(true);
+        }
+        return view('users.reports.basic');
+    }
 }

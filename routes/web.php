@@ -33,6 +33,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'c
     // users
     Route::resource('users', 'User\UserController');
     Route::get('users/project-preview/{id}/modal', 'User\UserController@projectPreviewModal')->name('users.project-preview.modal');
+    Route::get('users/report/basic', 'User\UserController@reportBasic')->name('users.report.basic');
 
     // lms-settings
     Route::resource('lms-settings', 'LmsSetting\LmsSettingController');
