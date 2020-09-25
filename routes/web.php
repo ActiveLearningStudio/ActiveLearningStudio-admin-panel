@@ -43,4 +43,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'c
 
     // activity types
     Route::resource('activity-types', 'Activity\ActivityTypeController');
+
+    // projects
+    Route::resource('projects', 'Project\ProjectController');
 });
