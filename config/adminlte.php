@@ -296,6 +296,16 @@ return [
             ],
         ],
         [
+            'text' => 'PROJECTS',
+            'icon' => 'fas fa-tasks',
+            'submenu' => [
+                [
+                    'text' => 'All Projects',
+                    'url' => 'admin/projects',
+                ],
+            ],
+        ],
+        [
             'text' => 'LMS SETTINGS',
             'icon' => 'fas fa-fw fa-cog',
             'submenu' => [
