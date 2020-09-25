@@ -24,17 +24,26 @@ Route::post('custom/login', 'Auth\LoginController@customLogin');
 /**
  * Admin Auth Routes
  */
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'check.token']], function()
-{
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'check.token']], function () {
     // Dashboard
-    Route::get('/dashboard', function() {
+    Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
 
     // users
     Route::resource('users', 'User\UserController');
     Route::get('users/project-preview/{id}/modal', 'User\UserController@projectPreviewModal')->name('users.project-preview.modal');
+    Route::get('users/report/basic', 'User\UserController@reportBasic')->name('users.report.basic');
 
     // lms-settings
     Route::resource('lms-settings', 'LmsSetting\LmsSettingController');
+
+    // activity items
+    Route::resource('activity-items', 'Activity\ActivityItemController');
+
+    // activity types
+    Route::resource('activity-types', 'Activity\ActivityTypeController');
+
+    // projects
+    Route::resource('projects', 'Project\ProjectController');
 });

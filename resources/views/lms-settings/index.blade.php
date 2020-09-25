@@ -61,6 +61,7 @@
             var table = $('.table').DataTable({
                 processing: true,
                 serverSide: true,
+                searchDelay: 800,
                 pageLength: 25,
                 deferRender: true,
                 ajax: "{{ route('admin.lms-settings.index') }}",
@@ -73,18 +74,11 @@
             });
         });
 
-        // destroy the setting
-        function destroy_data(id){
-            if (confirm('Are you sure?')){
-                success_sel.find('.alert-success').remove();
-                resetAjaxParams( "DELETE");
-                callParams.Url = api_url + api_v + "/admin/lms-settings/" + id;
-                ajaxCall(callParams, dataParams, function (result) {
-                    if (result.message) {
-                        showMessage(result.message);
-                        $(".action-group").find("[data-id='" + id + "']").closest('tr').fadeOut('slow');
-                    }
-                });
+        // destroy the lms setting
+        function destroy_data(id) {
+            if (confirm('Are you sure?')) {
+                let url = api_url + api_v + "/admin/lms-settings/" + id;
+                destroy(url, id); // url and id parameter for fading the element
             }
         }
     </script>

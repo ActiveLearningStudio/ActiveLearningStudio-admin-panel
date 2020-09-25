@@ -23,10 +23,17 @@
                 <!-- form start -->
                 {{ Aire::open()->class('form-horizontal')->id('user_update')->put()->bind($response['data'])
                       ->rules([
-                        'first_name' => 'required',
-                        'last_name' => 'required',
-                        'email' => 'required|email',
+                        'first_name' => 'required|max:255',
+                        'last_name' => 'required|max:255',
+                        'password' => 'regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/',
+                        'organization_name' => 'max:255',
+                        'job_title' => 'max:255',
+                        'email' => 'required|email|max:255',
                         ])
+                       ->messages([
+                         'regex' => ':attribute must be 8 characters long, should contain at-least 1 Uppercase, 1 Lowercase and 1 Numeric character.',
+                        ])
+
                   }}
                 <div class="card-body">
                     <div class="form-group row">
@@ -77,8 +84,10 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body p-0">
-                    <p class="ml-2 mb-0"><small><i>Public checkbox will toggle the project public status ASAP as checked/un-checked.</i></small></p>
-                    <p class="ml-2 mb-0"><small><i>Elastic Search can be enabled/disabled for projects by clicking on EASTIC UPDATE button.</i></small></p>
+                    <p class="ml-2 mb-0"><small><i>Public checkbox will toggle the project public status ASAP as
+                                checked/un-checked.</i></small></p>
+                    <p class="ml-2 mb-0"><small><i>Elastic Search can be enabled/disabled for projects by clicking on
+                                EASTIC UPDATE button.</i></small></p>
                     <table class="table table-condensed">
                         <thead>
                         <tr>
@@ -119,12 +128,6 @@
 @stop
 @section('js')
     <script type="text/javascript">
-        // redirect to users listing page on cancel
-        $(".cancel").on("click", function (e) {
-            e.preventDefault();
-            window.location.href = $(this).data('redirect');
-        });
-
         // initialize select2 for clone project field
         $("#clone_project").select2({
             theme: 'bootstrap4',
@@ -134,7 +137,7 @@
                 url: api_url + api_v + "/admin/projects",
                 dataType: 'json',
                 type: "GET",
-                delay: 500,
+                delay: 700,
                 data: function (params) {
                     // Query parameters will be ?search=[term]&type=public&limit=100
                     return {
@@ -171,14 +174,13 @@
             var index_projects = [];
             var remove_index_projects = [];
             $.each($(".project_id"), function () {
-                if($(this).prop("checked")){
+                if ($(this).prop("checked")) {
                     index_projects.push($(this).val());
-                }else{
+                } else {
                     remove_index_projects.push($(this).val());
                 }
             });
 
-            success_sel.find('.alert-success').remove();
             resetAjaxParams("POST");
             callParams.Url = api_url + api_v + "/admin/projects/indexes";
             // Set Data parameters
@@ -187,9 +189,6 @@
             ajaxCall(callParams, dataParams, function (result) {
                 $(".project_id").next('.elastic_search').text('No');
                 $(".project_id:checked").next('.elastic_search').text('Yes');
-                if (result.message) {
-                    showMessage(result.message);
-                }
             });
         }
 
@@ -203,7 +202,6 @@
             e.preventDefault();
             resetAjaxParams("POST");
             let pass_sel = $("#password");
-            success_sel.find('.alert-success').remove();
 
             // if empty value
             if (!pass_sel.val()) {
@@ -214,30 +212,11 @@
             // Set Data parameters
             dataParams = $(this).serialize();
             ajaxCall(callParams, dataParams, function (result) {
-                if (result.message) {
-                    showMessage(result.message);
-                }
                 if ($("#clone_project").val()) {
                     location.reload();
                 }
             });
             pass_sel.removeAttr('disabled');
-        });
-
-        // load preview modal data dynamically
-        $(".modal-preview").on("click", function (e) {
-            e.preventDefault();
-            resetAjaxParams();
-            let target = $(this).data('target');
-            callParams.Url = $(this).data('href');
-            ajaxCall(callParams, dataParams, function (result) {
-                $(target).modal('show');
-                if (!result.html) {
-                    $(target).find('.modal-body').html('Data not found!');
-                    return false;
-                }
-                $(target).find('.modal-body').html(result.html);
-            });
         });
 
         // toggle elastic search status for single project
@@ -249,21 +228,15 @@
                 let projectCheckBox = $(".project_id[value=" + id + "]");
                 projectCheckBox.prop('checked', !projectCheckBox.prop("checked")); // check uncheck the relevant checkbox
                 projectCheckBox.next('.elastic_search').toggleText('Yes', 'No'); // Yes, No
-                if (result.message) {
-                    showMessage(result.message);
-                }
             });
         }
 
         // update the is_public status
-        function togglePublic(ele, id){
+        function togglePublic(ele, id) {
             resetAjaxParams();
             callParams.Url = api_url + api_v + "/admin/projects/" + id + "/public-status";
             ajaxCall(callParams, dataParams, function (result) {
                 $(ele).next('.is_public').toggleText('Yes', 'No'); // toggle the button text
-                if (result.message) {
-                    showMessage(result.message);
-                }
             });
         }
     </script>

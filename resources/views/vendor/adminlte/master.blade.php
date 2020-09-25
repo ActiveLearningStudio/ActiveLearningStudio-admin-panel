@@ -95,113 +95,22 @@
 
     // set the header - bearer token
     $.ajaxSetup({
-        beforeSend: function(xhr) {
+        beforeSend: function (xhr) {
             xhr.setRequestHeader('Authorization', 'Bearer {{session("access_token")}}');
             $('#overlay').fadeIn();
-        },complete: function(){
+        }, complete: function () {
             $('#overlay').fadeOut();
         },
     });
-
-    // generic ajax call
-    function ajaxCall(callParams, dataParams, callback) {
-        err_sel.find('.alert-danger').remove();
-        $.ajax({
-            type: callParams.Type,
-            url: callParams.Url,
-            quietMillis: 100,
-            dataType: callParams.DataType,
-            data: dataParams,
-            cache: true,
-            success: function (response) {
-                callback(response);
-            },
-            error: function (response) {
-                response = JSON.parse(response.responseText);
-                if(response.errors){
-                    showErrors(response.errors);
-                }else{
-                    alert('Something went wrong, try again later!');
-                }
-            }
-        });
-    }
-
-    /**
-     * Generic function for showing the validation errors
-     * @param errors
-     */
-    function showErrors(errors) {
-        var errors_li = '';
-        $.each(errors, function (key, val) {
-            if (typeof val === 'string') {
-                errors_li += '<li>' + val + '</li>';
-            } else {
-                errors_li += '<li>' + val[0] + '</li>';
-            }
-        });
-        showMessage(errors_li, 'error');
-        // err_sel.append('<div class="alert alert-danger"><ul>' + errors_li + '</ul></div>').scrollTop();
-        // $(window).scrollTop(success_sel.scrollTop()); // scroll to the message
-    }
-
-    /**
-     * Generic function for showing the success/error message
-     * @param message
-     * @param type
-     * @param title
-     * @param addClass
-     * @param icon
-     */
-    function showMessage(message, type = 'success', title = 'SUCCESS', addClass = 'bg-success', icon = 'fa fa-check') {
-        $("#toastsContainerTopRight").remove();
-        if (type === 'error'){
-            addClass = 'bg-danger';
-            title = 'ERROR';
-            icon = 'fa fa-exclamation-triangle';
-        }
-        $(document).Toasts('create', {
-            title: title,
-            class: addClass,
-            icon: icon,
-            body: message,
-        });
-        // success_sel.append('<div class="alert alert-success"><p>' + message + '</p></div>');
-        // $(window).scrollTop(success_sel.scrollTop()); // scroll to the message
-    }
-
-    /**
-     * Reset ajax call and data params
-     */
-    function resetAjaxParams(type = 'Get'){
-        callParams = {};
-        dataParams = {};
-        callParams.Type = type;
-        callParams.DataType = "JSON";
-    }
-
-    /**
-     * Reset the form data
-     * @param target
-     */
-    function resetForm(target){
-        $(target).trigger("reset");
-        $(".form-control").removeClass("is-valid");
-        $(".valid-feedback").remove();
-    }
-
-    // toggle text same like class
-    $.fn.extend({
-        toggleText: function(a, b){
-            return this.text((this.text()).trim() === b ? a : b);
-        }
-    });
-
-    // pace restart for ajax request
-    // $(document).ajaxStart(function () {
-    //     Pace.restart();
-    // });
 </script>
+@hasSection('data-tables-extensions')
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/b-1.6.4/b-colvis-1.6.4/b-flash-1.6.4/b-html5-1.6.4/b-print-1.6.4/datatables.min.css"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script type="text/javascript"
+            src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/b-1.6.4/b-colvis-1.6.4/b-flash-1.6.4/b-html5-1.6.4/b-print-1.6.4/datatables.min.js"></script>
+@endif
 {{-- Custom Scripts --}}
 @yield('js')
 

@@ -1,19 +1,16 @@
 @extends('adminlte::page')
 
-@section('title', 'Users')
+@section('title', 'Activity Items')
 
 @section('content_header')
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-dark">Users</h1>
+                <h1 class="m-0 text-dark">Activity Items</h1>
             </div>
             <div class="col-sm-6">
                 <div class="float-sm-right">
-                    {{--                    <a class="btn-sm-app" href="#">--}}
-                    {{--                        <i class="fas fa-file-import"></i> Import--}}
-                    {{--                    </a>--}}
-                    <a class="btn-sm-app" href="{{route('admin.users.create')}}">
+                    <a class="btn-sm-app" href="{{route('admin.activity-items.create')}}">
                         <i class="fas fa-plus"></i> Add
                     </a>
                 </div>
@@ -37,9 +34,10 @@
                                 <table class="table table-bordered table-striped dataTable" role="grid">
                                     <thead>
                                     <tr role="row">
-                                        <th>First Name</th>
-                                        <th>Last Name</th>
-                                        <th>Email</th>
+                                        <th>Title</th>
+                                        <th>Image</th>
+                                        <th>Order</th>
+                                        <th>Meta</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
@@ -67,21 +65,21 @@
                 pageLength: 25,
                 searchDelay: 800,
                 deferRender: true,
-                ajax: "{{ route('admin.users.index') }}",
+                ajax: "{{ route('admin.activity-items.index') }}",
                 columns: [
-                    {data: 'first_name', name: 'first_name'},
-                    {data: 'last_name', name: 'last_name'},
-                    {data: 'email', name: 'email'},
+                    {data: 'title', name: 'title'},
+                    {data: 'image', name: 'image', orderable: false, searchable: false},
+                    {data: 'order', name: 'order'},
+                    {data: 'meta', name: 'meta', orderable: false, searchable: false},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
-                ],
-                "order": [[0, "asc"]]
+                ]
             });
         });
 
-        // destroy the user
+        // destroy the item
         function destroy_data(id) {
             if (confirm('Are you sure?')) {
-                let url = api_url + api_v + "/admin/users/" + id;
+                let url = api_url + api_v + "/admin/activity-items/" + id;
                 destroy(url, id); // url and id parameter for fading the element
             }
         }
