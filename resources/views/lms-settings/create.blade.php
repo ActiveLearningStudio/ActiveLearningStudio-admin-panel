@@ -96,7 +96,7 @@
     <script type="text/javascript">
         // initialize select2
         let url = api_url + api_v + "/admin/users";
-        initializeSelect2("#user_id", url, "name");
+        initializeSelect2("#user_id", url, ["name", "email"]);
 
         // form submit
         url =  api_url + api_v + "/admin/lms-settings";

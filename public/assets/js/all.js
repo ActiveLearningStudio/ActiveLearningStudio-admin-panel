@@ -386,7 +386,7 @@ function multiPartFormSubmission(target, url, callback) {
  * @param textProp
  * @param idProp
  */
-function initializeSelect2(target, url, textProp = 'title', idProp = 'id') {
+function initializeSelect2(target, url, textProp = ['title'], idProp = 'id') {
     $(target).select2({
         theme: 'bootstrap4',
         // allowClear: true,  currently not working - need to debug
@@ -408,8 +408,12 @@ function initializeSelect2(target, url, textProp = 'title', idProp = 'id') {
                 let result = data.data;
                 return {
                     results: $.map(result, function (item) {
+                        let text = null;
+                        if (textProp[1]) {
+                            text = item[textProp[0]] + " - (" + item[textProp[1]] + ")";
+                        }
                         return {
-                            text: item[textProp],
+                            text: text ? text : item[textProp[0]],
                             id: item[idProp]
                         }
                     }),
@@ -453,7 +457,7 @@ $(function () {
     });
 
     // load preview modal data dynamically
-    $(".modal-preview").on("click", function (e) {
+    $("body").on("click", ".modal-preview", function (e) {
         e.preventDefault();
         resetAjaxParams();
         let target = $(this).data('target');

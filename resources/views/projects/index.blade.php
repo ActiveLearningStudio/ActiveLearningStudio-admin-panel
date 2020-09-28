@@ -45,7 +45,9 @@
                                         <th><input type="checkbox" id="check_all" class="checkbox d-none"> Starter
                                             Project
                                         </th>
+                                        <th>ID</th>
                                         <th>Name</th>
+                                        <th>Email</th>
                                         <th>Elastic Search</th>
                                         <th>Public</th>
                                     </tr>
@@ -63,6 +65,7 @@
             </div>
         </div>
     </div>
+    @include('layouts.base-modal', ['modal' => ['id' => 'preview-project', 'class' => 'modal-xl', 'title' => 'Preview Project']])
 @stop
 @section('js')
     <script type="text/javascript">
@@ -89,11 +92,13 @@
                     },
                     columns: [
                         {data: 'starter_project', name: 'starter_project', orderable: false, searchable: false},
+                        {data: 'id', name: 'id'},
                         {data: 'name', name: 'name'},
+                        {data: 'email', name: 'email', orderable: false, searchable: false},
                         {data: 'elasticsearch', name: 'elasticsearch', searchable: false},
                         {data: 'is_public', name: 'is_public', searchable: false},
                     ],
-                    "order": [[1, "asc"]],
+                    "order": [[1, "desc"]],
                     drawCallback: function (settings, json) {
                         optionsUpdate();
                     }
@@ -152,6 +157,15 @@
                     $(".project_id:checked").next('.starter_project').text('No');
                 }
                 $("#projects_filter").trigger('change');
+            });
+        }
+
+        // toggle elastic search status for single project
+        function updateIndex(ele, id) {
+            resetAjaxParams();
+            callParams.Url = api_url + api_v + "/admin/projects/" + id + "/index";
+            ajaxCall(callParams, dataParams, function (result) {
+                $(ele).toggleText('Index', 'Remove Index'); // toggle the button text
             });
         }
     </script>
