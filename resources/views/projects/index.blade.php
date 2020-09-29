@@ -48,6 +48,8 @@
                                         <th>ID</th>
                                         <th>Name</th>
                                         <th>Email</th>
+                                        <th>Parent Project</th>
+                                        <th>Clone CTR</th>
                                         <th>Elastic Search</th>
                                         <th>Public</th>
                                     </tr>
@@ -95,6 +97,8 @@
                         {data: 'id', name: 'id'},
                         {data: 'name', name: 'name'},
                         {data: 'email', name: 'email', orderable: false, searchable: false},
+                        {data: 'cloned_from', name: 'cloned_from', searchable: false},
+                        {data: 'clone_ctr', name: 'clone_ctr', searchable: false},
                         {data: 'elasticsearch', name: 'elasticsearch', searchable: false},
                         {data: 'is_public', name: 'is_public', searchable: false},
                     ],
