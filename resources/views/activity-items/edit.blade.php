@@ -25,7 +25,7 @@
                 {{ Aire::open()->id('activity-items-form')->class('form-horizontal')->put()->bind($response['data'])
                     ->rules([
                         'title' => 'required|max:255',
-                        'description' => 'required|max:255',
+                        'description' => 'required',
                         'demo_activity_id' => 'max:255',
                         'demo_video_id' => 'max:255',
                         'image' => 'required',
@@ -106,12 +106,11 @@
         initializeSelect2("#activity_type_id", url);
 
         // set the already selected user option
-        var $option = $("<option selected></option>").val('{{$response['data']['activityType']['id']}}').text('{{$response['data']['activityType']['title']}}');
+        var $option = $("<option selected></option>").val('{{$response['data']['activityType']['id']}}').text(decodeHTML('{{$response['data']['activityType']['title']}}'));
         $('#activity_type_id').append($option).trigger('change');
 
         // form submit
         url = api_url + api_v + "/admin/activity-items/" + {{$response['data']['id']}};
         multiPartFormSubmission("#activity-items-form", url);
-
     </script>
 @endsection

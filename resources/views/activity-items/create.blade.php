@@ -25,7 +25,7 @@
                 {{ Aire::open()->id('activity-items-form')->class('form-horizontal')
                     ->rules([
                         'title' => 'required|max:255',
-                        'description' => 'required|max:255',
+                        'description' => 'required',
                         'demo_activity_id' => 'max:255',
                         'demo_video_id' => 'max:255',
                         'image' => 'required',

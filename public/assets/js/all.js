@@ -446,6 +446,17 @@ function readURL(input) {
 }
 
 /**
+ * Decode HTML Entities
+ * @param html
+ * @returns {string}
+ */
+function decodeHTML(html) {
+    let txt = document.createElement("textarea");
+    txt.innerHTML = html;
+    return txt.value;
+}
+
+/**
  * Generic event handlers
  */
 $(function () {
