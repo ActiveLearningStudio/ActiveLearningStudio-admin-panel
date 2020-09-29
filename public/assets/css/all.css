@@ -168,3 +168,7 @@ table.dataTable{clear:both;margin-top:6px !important;margin-bottom:6px !importan
         transform: rotate(360deg);
     }
 }
+.table {
+    table-layout: fixed;
+    width: 100% !important;
+}

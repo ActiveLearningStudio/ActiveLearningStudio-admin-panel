@@ -100,7 +100,9 @@
         initializeSelect2("#user_id", url, ["name", "email"]);
 
         // set the already selected user option
-        var $option = $("<option selected></option>").val('{{$response['data']['user_id']}}').text('{{$response['data']['user']['name'] ." - (" . $response['data']['user']['email'] .")"}}');
+        var $option = $("<option selected></option>").val('{{$response['data']['user_id']}}')
+            .text(decodeHTML('{{$response['data']['user']['name'] ." - (" . $response['data']['user']['email'] .")"}}'));
+
         $('#user_id').append($option).trigger('change');
 
         // form submit
