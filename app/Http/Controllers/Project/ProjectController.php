@@ -37,11 +37,15 @@ class ProjectController extends Controller
                     function($project) {
                         return view('projects.partials.name_column', ['project' => $project])->render();
                     })
+                ->editColumn('cloned_from',
+                    function($project) {
+                        return view('projects.partials.parent_project_column', ['project' => $project])->render();
+                    })
                 ->addColumn('email',
                     function($project) {
                         return view('projects.partials.email_column', ['project' => $project])->render();
                     })
-                ->rawColumns(['starter_project', 'name'])
+                ->rawColumns(['starter_project', 'name', 'cloned_from'])
                 ->skipPaging() // already paginated response
                 ->filter(function ($instance) {
                     return true;
