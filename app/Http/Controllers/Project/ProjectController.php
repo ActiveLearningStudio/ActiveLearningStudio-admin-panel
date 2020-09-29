@@ -33,8 +33,19 @@ class ProjectController extends Controller
                     function($project) {
                         return view('projects.partials.starter_project', ['project' => $project])->render();
                     })
-                ->rawColumns(['starter_project'])
+                ->editColumn('name',
+                    function($project) {
+                        return view('projects.partials.name_column', ['project' => $project])->render();
+                    })
+                ->addColumn('email',
+                    function($project) {
+                        return view('projects.partials.email_column', ['project' => $project])->render();
+                    })
+                ->rawColumns(['starter_project', 'name'])
                 ->skipPaging() // already paginated response
+                ->filter(function ($instance) {
+                    return true;
+                }) // we don't need DataTables filter here
                 ->make(true);
         }
         return view('projects.index');
