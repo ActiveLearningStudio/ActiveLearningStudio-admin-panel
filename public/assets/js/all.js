@@ -334,7 +334,9 @@ function serializedSubmitForm(target, url, callback) {
         // Set Data parameters
         dataParams = $(this).serialize();
         ajaxCall(callParams, dataParams, function (response) {
-            resetForm(target);
+            if ($(target).find("input[name='_method']").val() !== 'PUT') {
+                resetForm(target);
+            }
             if (callback) {
                 callback(response);
             }
@@ -361,7 +363,9 @@ function multiPartFormSubmission(target, url, callback) {
             success: function (result) {
                 if (result.message) {
                     showMessage(result.message);
-                    resetForm(target);
+                    if ($(target).find("input[name='_method']").val() !== 'PUT') {
+                        resetForm(target);
+                    }
                 }
                 if (callback) {
                     callback(result);
