@@ -213,9 +213,9 @@
             // Set Data parameters
             dataParams = $(this).serialize();
             ajaxCall(callParams, dataParams, function (result) {
-                if ($("#clone_project").val()) {
-                    location.reload();
-                }
+                /*if ($("#clone_project").val()) {
+                    // location.reload();
+                }*/
             });
             pass_sel.removeAttr('disabled');
         });
