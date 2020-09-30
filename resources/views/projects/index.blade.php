@@ -48,7 +48,7 @@
                                         <th>ID</th>
                                         <th>Name</th>
                                         <th>Email</th>
-                                        <th>Parent Project</th>
+                                        <th>Original Project</th>
                                         <th>Clone CTR</th>
                                         <th>Elastic Search</th>
                                         <th>Public</th>
