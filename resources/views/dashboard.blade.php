@@ -11,9 +11,18 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-{{--                    <iframe style="width:100%;min-height:800px;" src="https://datastudio.google.com/embed/reporting/1ncLPGxais3x8jKF4Fxa7cMK3SX3byIP_/page/PJMWB" frameborder="0" style="border:0" allowfullscreen></iframe>--}}
+                    <iframe id="curriki-iframe" width="600" height="600" src="" frameborder="0"></iframe>
                 </div>
             </div>
         </div>
     </div>
 @stop
+@section('js')
+    <script type="text/javascript">
+        function loadDeferredIframe() {
+            var iframe = document.getElementById("curriki-iframe");
+            iframe.src = "http://knowage.currikistudio.org:8081/knowage/public/servlet/AdapterHTTP?ACTION_NAME=EXECUTE_DOCUMENT_ACTION&OBJECT_LABEL=User Statistics&TOOLBAR_VISIBLE=true&ORGANIZATION=DEFAULT_TENANT&NEW_SESSION=true";
+        }
+        window.onload = loadDeferredIframe;
+    </script>
+@endsection

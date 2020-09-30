@@ -10,9 +10,10 @@
             </div>
             <div class="col-sm-6">
                 <div class="float-sm-right">
-                    {{--                    <a class="btn-sm-app" href="#">--}}
-                    {{--                        <i class="fas fa-file-import"></i> Import--}}
-                    {{--                    </a>--}}
+                    <a class="btn-sm-app modal-preview" href="#" data-target="#users-import"
+                       data-href="{{route('admin.users.bulk-import.modal')}}">
+                        <i class="fas fa-file-import"></i> Import
+                    </a>
                     <a class="btn-sm-app" href="{{route('admin.users.create')}}">
                         <i class="fas fa-plus"></i> Add
                     </a>
@@ -56,6 +57,7 @@
             </div>
         </div>
     </div>
+    @include('layouts.base-modal', ['modal' => ['id' => 'users-import', 'class' => 'modal-md', 'title' => 'Users Import']])
 @stop
 
 @section('js')
