@@ -11,7 +11,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <iframe id="curriki-iframe" width="600" height="600" src="" frameborder="0"></iframe>
+                    <iframe id="curriki-iframe" width="100%" height="600" src="" frameborder="0"></iframe>
                 </div>
             </div>
         </div>
