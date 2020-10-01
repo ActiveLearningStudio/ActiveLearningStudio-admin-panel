@@ -107,7 +107,8 @@
                                 {{-- <td><a href="{{config('app.frontend_url')}}project/{{$project['id']}}/shared"
                                         target="_blank">{{$project['name']}}</a></td>   --}}
                                 <td><a class="modal-preview" data-target="#preview-project" href="javascript:void(0)"
-                                       data-href="{{route('admin.users.project-preview.modal', $project['id'])}}">{{$project['name']}}</a>
+                                       data-href="{{route('admin.users.project-preview.modal', $project['id'])}}">
+                                        {{'ID: '.$project['id']. ' | ' . $project['name']}}</a>
                                 </td>
                                 <td>
                                     <input type="checkbox" class="project_public"
@@ -212,9 +213,9 @@
             // Set Data parameters
             dataParams = $(this).serialize();
             ajaxCall(callParams, dataParams, function (result) {
-                if ($("#clone_project").val()) {
-                    location.reload();
-                }
+                /*if ($("#clone_project").val()) {
+                    // location.reload();
+                }*/
             });
             pass_sel.removeAttr('disabled');
         });

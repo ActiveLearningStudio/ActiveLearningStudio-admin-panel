@@ -25,7 +25,7 @@
                 {{ Aire::open()->id('activity-items-form')->class('form-horizontal')
                     ->rules([
                         'title' => 'required|max:255',
-                        'description' => 'required|max:255',
+                        'description' => 'required',
                         'demo_activity_id' => 'max:255',
                         'demo_video_id' => 'max:255',
                         'image' => 'required',
@@ -106,6 +106,10 @@
 
         // form submit
         url = api_url + api_v + "/admin/activity-items";
-        multiPartFormSubmission("#activity-items-form", url);
+        multiPartFormSubmission("#activity-items-form", url, function (response){
+            $("#image-preview").hide();
+            $("select").val(null);
+            $("#activity_type_id").empty().trigger('change')
+        });
     </script>
 @endsection

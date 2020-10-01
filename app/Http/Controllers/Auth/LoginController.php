@@ -56,14 +56,12 @@ class LoginController extends Controller
      * @throws \Throwable
      */
     public function customLogin(Request $request){
-//        if (!in_array($request->email, config('custom.allowed_emails'), true)) throw new GeneralException('This email is not authorized!');
-        $this->response = Http::withHeaders(['Accept' => 'application/json',])->post(api_url().'/login', $request->only('email', 'password'));
-        // if validation failse laravel return 422 code
+        $this->response = Http::withHeaders(['Accept' => 'application/json',])->post(api_url().'/admin/login', $request->only('email', 'password'));
+        // if validation fails laravel return 422 code
         if ($this->response->status() === 422) {
             return redirect()->back()->withErrors($this->response->json()['errors'])->withInput();
         }
         throw_if($this->response->failed() || $this->response->serverError(), new GeneralException($this->getError()));
-        throw_if(!$this->response['user']['is_admin'], new GeneralException('Unauthorized!'));
         session(['access_token' => $this->response['access_token']]);
         // also login the user locally
         Auth::loginUsingId($this->response['user']['id'], true);

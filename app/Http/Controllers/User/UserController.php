@@ -11,6 +11,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
@@ -83,5 +84,14 @@ class UserController extends Controller
                 ->make(true);
         }
         return view('users.reports.basic');
+    }
+
+    /**
+     * @return Application|ResponseFactory|Response
+     * @throws \Throwable
+     */
+    public function bulkImportModal(){
+        $html = view('users.partials.bulk-import-modal')->render();
+        return response(['html' => $html], 200);
     }
 }

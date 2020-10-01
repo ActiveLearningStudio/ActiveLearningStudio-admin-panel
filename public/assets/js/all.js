@@ -334,7 +334,9 @@ function serializedSubmitForm(target, url, callback) {
         // Set Data parameters
         dataParams = $(this).serialize();
         ajaxCall(callParams, dataParams, function (response) {
-            resetForm(target);
+            if ($(target).find("input[name='_method']").val() !== 'PUT') {
+                resetForm(target);
+            }
             if (callback) {
                 callback(response);
             }
@@ -361,7 +363,9 @@ function multiPartFormSubmission(target, url, callback) {
             success: function (result) {
                 if (result.message) {
                     showMessage(result.message);
-                    resetForm(target);
+                    if ($(target).find("input[name='_method']").val() !== 'PUT') {
+                        resetForm(target);
+                    }
                 }
                 if (callback) {
                     callback(result);
@@ -386,7 +390,7 @@ function multiPartFormSubmission(target, url, callback) {
  * @param textProp
  * @param idProp
  */
-function initializeSelect2(target, url, textProp = 'title', idProp = 'id') {
+function initializeSelect2(target, url, textProp = ['title'], idProp = 'id') {
     $(target).select2({
         theme: 'bootstrap4',
         // allowClear: true,  currently not working - need to debug
@@ -408,8 +412,12 @@ function initializeSelect2(target, url, textProp = 'title', idProp = 'id') {
                 let result = data.data;
                 return {
                     results: $.map(result, function (item) {
+                        let text = null;
+                        if (textProp[1]) {
+                            text = item[textProp[0]] + " - (" + item[textProp[1]] + ")";
+                        }
                         return {
-                            text: item[textProp],
+                            text: text ? text : item[textProp[0]],
                             id: item[idProp]
                         }
                     }),
@@ -438,6 +446,17 @@ function readURL(input) {
 }
 
 /**
+ * Decode HTML Entities
+ * @param html
+ * @returns {string}
+ */
+function decodeHTML(html) {
+    let txt = document.createElement("textarea");
+    txt.innerHTML = html;
+    return txt.value;
+}
+
+/**
  * Generic event handlers
  */
 $(function () {
@@ -453,7 +472,7 @@ $(function () {
     });
 
     // load preview modal data dynamically
-    $(".modal-preview").on("click", function (e) {
+    $("body").on("click", ".modal-preview", function (e) {
         e.preventDefault();
         resetAjaxParams();
         let target = $(this).data('target');

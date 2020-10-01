@@ -97,14 +97,16 @@
     <script type="text/javascript">
         // initialize select2
         let url = api_url + api_v + "/admin/users";
-        initializeSelect2("#user_id", url, "name");
+        initializeSelect2("#user_id", url, ["name", "email"]);
 
         // set the already selected user option
-        var $option = $("<option selected></option>").val('{{$response['data']['user_id']}}').text('{{$response['data']['user']['name']}}');
+        var $option = $("<option selected></option>").val('{{$response['data']['user_id']}}')
+            .text(decodeHTML('{{$response['data']['user']['name'] ." - (" . $response['data']['user']['email'] .")"}}'));
+
         $('#user_id').append($option).trigger('change');
 
         // form submit
-        url =  api_url + api_v + "/admin/lms-settings/" + {{$response['data']['id']}};
+        url = api_url + api_v + "/admin/lms-settings/" + {{$response['data']['id']}};
         serializedSubmitForm("#lms-settings-form", url);
     </script>
 @endsection
