@@ -100,6 +100,8 @@
 
         // form submit
         url =  api_url + api_v + "/admin/lms-settings";
-        serializedSubmitForm("#lms-settings-form", url);
+        serializedSubmitForm("#lms-settings-form", url, function (response){
+            $("#user_id").empty().trigger('change')
+        });
     </script>
 @endsection
