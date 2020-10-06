@@ -45,4 +45,4 @@ if (mix.inProduction()) {
     });
 }
 
-mix.browserSync('http://localhost:8000');
+mix.browserSync('http://local.admin-studio.com');
