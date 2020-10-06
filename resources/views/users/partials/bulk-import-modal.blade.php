@@ -16,7 +16,7 @@
                                 </a>
                             </strong>
                         </p>
-                        <p class="text-center report-wrap d-none">
+                        <p class="text-center report-wrap hide-div d-none">
                             <strong>
                                 <a href="javascript:void(0)" id="import-report" onclick="$(this).hide()" class="btn btn-danger" target="_blank">
                                     Download Import Report
