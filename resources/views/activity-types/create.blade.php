@@ -65,6 +65,8 @@
     <script type="text/javascript">
         // form submit
         let url = api_url + api_v + "/admin/activity-types";
-        multiPartFormSubmission("#activity-types-form", url);
+        multiPartFormSubmission("#activity-types-form", url, function (response){
+            $("#image-preview").hide();
+        });
     </script>
 @endsection

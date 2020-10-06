@@ -142,6 +142,7 @@ function serializedSubmitForm(target, url, callback) {
 function multiPartFormSubmission(target, url, callback) {
     $(target).on('submit', function (e) {
         e.preventDefault();
+        $(target).find('.hide-div').addClass('d-none'); // find div which needs to be hide before Ajax-Call
         $.ajax({
             url: url,
             method: "POST",

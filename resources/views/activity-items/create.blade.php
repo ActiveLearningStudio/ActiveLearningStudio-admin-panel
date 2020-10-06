@@ -106,6 +106,10 @@
 
         // form submit
         url = api_url + api_v + "/admin/activity-items";
-        multiPartFormSubmission("#activity-items-form", url);
+        multiPartFormSubmission("#activity-items-form", url, function (response){
+            $("#image-preview").hide();
+            $("select").val(null);
+            $("#activity_type_id").empty().trigger('change')
+        });
     </script>
 @endsection
