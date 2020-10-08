@@ -276,6 +276,17 @@ return [
                 ],
             ],
         ],
+        'ORGANIZATIONS',
+        [
+            'text' => 'TYPES',
+            'icon' => 'fas fa-fw fa-building',
+            'submenu' => [
+                [
+                    'text' => 'Organization Types',
+                    'url' => 'admin/organization-types'
+                ]
+            ]
+        ],
         'OTHERS',
         [
             'text' => 'Users',
