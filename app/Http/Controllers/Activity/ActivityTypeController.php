@@ -52,7 +52,7 @@ class ActivityTypeController extends Controller
      */
     public function edit($id)
     {
-        $response = $this->getHTTP($this->end_point.'/'.$id.'/edit');
+        $response = $this->getHTTP($this->end_point.'/'.$id);
         return view('activity-types.edit', ['response' => $response]);
     }
 

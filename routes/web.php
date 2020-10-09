@@ -32,9 +32,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'c
 
     // users
     Route::resource('users', 'User\UserController');
-    Route::get('users/project-preview/{id}/modal', 'User\UserController@projectPreviewModal')->name('users.project-preview.modal');
     Route::get('users/import/bulk', 'User\UserController@bulkImportModal')->name('users.bulk-import.modal');
     Route::get('users/report/basic', 'User\UserController@reportBasic')->name('users.report.basic');
+    Route::get('users/project-preview/{id}/modal', 'User\UserController@projectPreviewModal')->name('users.project-preview.modal');
 
     // lms-settings
     Route::resource('lms-settings', 'LmsSetting\LmsSettingController');
@@ -46,6 +46,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'c
     Route::resource('activity-types', 'Activity\ActivityTypeController');
 
     // projects
+    Route::get('projects/exclude-starter', 'Project\ProjectController@userProjects');
     Route::resource('projects', 'Project\ProjectController');
 
     // organization types
