@@ -47,4 +47,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'c
 
     // projects
     Route::resource('projects', 'Project\ProjectController');
+
+    // organization types
+    Route::get('organization-types', 'Organization\OrganizationTypesController@index');
+    Route::get('organization-types/create', 'Organization\OrganizationTypesController@create');
+    Route::get('organization-types/{id}/edit', 'Organization\OrganizationTypesController@edit');
+    Route::get('organization-types/{id}/delete', 'Organization\OrganizationTypesController@delete');
+    Route::get('organization-types/{id}/order/{direction}', 'Organization\OrganizationTypesController@change_order');
+    Route::post('organization-types/save', 'Organization\OrganizationTypesController@save');
 });

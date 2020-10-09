@@ -52,10 +52,25 @@ trait RequestTrait
      * @return array|RedirectResponse|mixed
      * @throws Throwable
      */
+    public function putHTTP($end_point, $params = [])
+    {
+        $this->response = Http::withToken(session('access_token'))->withHeaders($this->headers)->put(api_url() . $this->apiV . $end_point, $params);
+        if ($this->response->status() === 422) {
+            return redirect()->back()->withErrors($this->response->json()['errors'])->withInput();
+        }
+        throw_if($this->response->failed() || $this->response->serverError(), new GeneralException($this->getError()));
+        return $this->response->json();
+    }
+
+    /**
+     * @param $end_point
+     * @param array $params
+     * @return array|RedirectResponse|mixed
+     * @throws Throwable
+     */
     public function deleteHTTP($end_point, $params = [])
     {
         $this->response = Http::withToken(session('access_token'))->withHeaders($this->headers)->delete(api_url() . $this->apiV . $end_point);
-//        dd($this->response, $this->response->body());
         throw_if($this->response->failed() || $this->response->serverError(), new GeneralException($this->getError()));
         return $this->response->json();
     }
