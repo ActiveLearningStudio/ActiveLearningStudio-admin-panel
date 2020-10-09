@@ -60,7 +60,7 @@ class ActivityItemController extends Controller
      */
     public function edit($id)
     {
-        $response = $this->getHTTP($this->end_point . '/' . $id . '/edit');
+        $response = $this->getHTTP($this->end_point . '/' . $id);
         return view('activity-items.edit', ['response' => $response]);
     }
 

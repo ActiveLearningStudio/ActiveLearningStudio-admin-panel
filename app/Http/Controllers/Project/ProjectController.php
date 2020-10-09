@@ -54,4 +54,11 @@ class ProjectController extends Controller
         }
         return view('projects.index');
     }
+
+    /**
+     * @return Application|Factory|View
+     */
+    public function userProjects(){
+        return view('projects.user-projects');
+    }
 }

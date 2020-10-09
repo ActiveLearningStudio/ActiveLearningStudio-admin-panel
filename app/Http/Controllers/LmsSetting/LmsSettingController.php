@@ -51,7 +51,7 @@ class LmsSettingController extends Controller
      */
     public function edit($id)
     {
-        $response = $this->getHTTP($this->end_point.'/'.$id.'/edit');
+        $response = $this->getHTTP($this->end_point.'/'.$id);
         return view('lms-settings.edit', ['response' => $response]);
     }
 

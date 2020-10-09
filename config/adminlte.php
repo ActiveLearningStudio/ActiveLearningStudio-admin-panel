@@ -276,17 +276,6 @@ return [
                 ],
             ],
         ],
-        'ORGANIZATIONS',
-        [
-            'text' => 'TYPES',
-            'icon' => 'fas fa-fw fa-building',
-            'submenu' => [
-                [
-                    'text' => 'Organization Types',
-                    'url' => 'admin/organization-types'
-                ]
-            ]
-        ],
         'OTHERS',
         [
             'text' => 'Users',
@@ -310,6 +299,10 @@ return [
             'text' => 'PROJECTS',
             'icon' => 'fas fa-tasks',
             'submenu' => [
+                [
+                    'text' => 'User Projects',
+                    'url' => 'admin/projects/exclude-starter',
+                ],
                 [
                     'text' => 'All Projects',
                     'url' => 'admin/projects',
