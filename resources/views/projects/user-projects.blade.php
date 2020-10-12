@@ -7,6 +7,7 @@
         <div class="row mb-2">
             <div class="col-sm-6">
                 <h1 class="m-0 text-dark">User Projects</h1>
+                <p><strong>Elastic search will work if both check-boxes public and elastic are checked.</strong></p>
             </div>
             <div class="col-sm-6">
                 <div class="float-sm-right">
