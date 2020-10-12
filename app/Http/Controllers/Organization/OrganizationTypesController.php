@@ -14,12 +14,12 @@ use Yajra\DataTables\Facades\DataTables;
 class OrganizationTypesController extends Controller
 {
     use RequestTrait;
-    protected $end_point = '/organization-type';
+    protected $end_point = '/organization-types';
 
     public function index()
     {
         $orgTypes = $this->getHTTP($this->end_point);
-        return view('organization-types.index', ['orgTypes'=>$orgTypes]);
+        return view('organization-types.index', ['orgTypes'=>$orgTypes['data']]);
     }
 
     public function create()
