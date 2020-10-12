@@ -301,7 +301,7 @@ return [
             'submenu' => [
                 [
                     'text' => 'User Projects',
-                    'url' => 'admin/projects/exclude-starter',
+                    'url' => 'admin/projects/user-projects',
                 ],
                 [
                     'text' => 'All Projects',

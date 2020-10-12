@@ -145,7 +145,8 @@
                         q: params.term,
                         type: 'public',
                         users: true,
-                        page: params.page || 1
+                        page: params.page || 1,
+                        exclude_starter: 1
                     };
                 },
                 processResults: function (data) {
@@ -229,15 +230,6 @@
                 let projectCheckBox = $(".project_id[value=" + id + "]");
                 projectCheckBox.prop('checked', !projectCheckBox.prop("checked")); // check uncheck the relevant checkbox
                 projectCheckBox.next('.elastic_search').toggleText('Yes', 'No'); // Yes, No
-            });
-        }
-
-        // update the is_public status
-        function togglePublic(ele, id) {
-            resetAjaxParams();
-            callParams.Url = api_url + api_v + "/admin/projects/" + id + "/public-status";
-            ajaxCall(callParams, dataParams, function (result) {
-                $(ele).next('.is_public').toggleText('Yes', 'No'); // toggle the button text
             });
         }
     </script>

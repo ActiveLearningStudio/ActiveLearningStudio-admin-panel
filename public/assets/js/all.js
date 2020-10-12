@@ -458,6 +458,33 @@ function decodeHTML(html) {
 }
 
 /**
+ * Toggle the is_public column for project
+ * @param ele
+ * @param id
+ */
+function togglePublic(ele, id) {
+    resetAjaxParams();
+    callParams.Url = api_url + api_v + "/admin/projects/" + id + "/public-status";
+    ajaxCall(callParams, dataParams, function (result) {
+        $(ele).next('.is_public').toggleText('Yes', 'No'); // toggle the button text
+    });
+}
+
+/**
+ * Update elastic search index for project
+ * @param ele
+ * @param id
+ */
+function updateIndex(ele, id) {
+    resetAjaxParams();
+    callParams.Url = api_url + api_v + "/admin/projects/" + id + "/index";
+    ajaxCall(callParams, dataParams, function (result) {
+        $(ele).toggleText('Index', 'Remove Index'); // toggle the button text
+        $(ele).next('.elasticsearch').toggleText('Yes', 'No'); // toggle the button text
+    });
+}
+
+/**
  * Generic event handlers
  */
 $(function () {

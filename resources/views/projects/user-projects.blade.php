@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'All Projects')
+@section('title', 'User Projects')
 
 @section('content_header')
     <div class="container-fluid">
@@ -21,7 +21,8 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">PROJECTS</h3>
+                    <h3 class="card-title">PROJECTS <small>(Check-Boxes can be used for toggling the index and
+                            public/private status instantly of any project.)</small></h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -32,13 +33,13 @@
                                     <thead>
                                     <tr role="row">
                                         <th>ID</th>
+                                        <th>Created At</th>
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Original Project</th>
-                                        <th>Clone CTR</th>
+                                        {{--                                        <th>Clone CTR</th>--}}
                                         <th>Elastic Search</th>
                                         <th>Public</th>
-{{--                                        <th>Created At</th>--}}
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -78,29 +79,20 @@
                     },
                     columns: [
                         {data: 'id', name: 'id'},
+                        {data: 'created_at', name: 'created_at', searchable: false},
                         {data: 'name', name: 'name'},
                         {data: 'email', name: 'email', orderable: false, searchable: false},
                         {data: 'cloned_from', name: 'cloned_from', searchable: false},
-                        {data: 'clone_ctr', name: 'clone_ctr', searchable: false},
+                        // {data: 'clone_ctr', name: 'clone_ctr', searchable: false},
                         {data: 'elasticsearch', name: 'elasticsearch', searchable: false},
                         {data: 'is_public', name: 'is_public', searchable: false},
-                        // {data: 'created_at', name: 'created_at', searchable: false},
                     ],
-                    "order": [[1, "desc"]],
+                    "order": [[0, "desc"]],
                 });
             }
 
             // initialize datatable
             initializeDataTable(projects_filter.val());
         });
-
-        // toggle elastic search status for single project
-        function updateIndex(ele, id) {
-            resetAjaxParams();
-            callParams.Url = api_url + api_v + "/admin/projects/" + id + "/index";
-            ajaxCall(callParams, dataParams, function (result) {
-                $(ele).toggleText('Index', 'Remove Index'); // toggle the button text
-            });
-        }
     </script>
 @endsection
