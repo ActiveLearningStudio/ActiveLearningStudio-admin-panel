@@ -52,6 +52,7 @@
                                         <th>Clone CTR</th>
                                         <th>Elastic Search</th>
                                         <th>Public</th>
+                                        <th>Created At</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -101,6 +102,7 @@
                         {data: 'clone_ctr', name: 'clone_ctr', searchable: false},
                         {data: 'elasticsearch', name: 'elasticsearch', searchable: false},
                         {data: 'is_public', name: 'is_public', searchable: false},
+                        {data: 'created_at', name: 'created_at', searchable: false}
                     ],
                     "order": [[1, "desc"]],
                     drawCallback: function (settings, json) {
@@ -161,15 +163,6 @@
                     $(".project_id:checked").next('.starter_project').text('No');
                 }
                 $("#projects_filter").trigger('change');
-            });
-        }
-
-        // toggle elastic search status for single project
-        function updateIndex(ele, id) {
-            resetAjaxParams();
-            callParams.Url = api_url + api_v + "/admin/projects/" + id + "/index";
-            ajaxCall(callParams, dataParams, function (result) {
-                $(ele).toggleText('Index', 'Remove Index'); // toggle the button text
             });
         }
     </script>

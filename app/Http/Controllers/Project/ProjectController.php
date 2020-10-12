@@ -41,15 +41,29 @@ class ProjectController extends Controller
                     function($project) {
                         return view('projects.partials.parent_project_column', ['project' => $project])->render();
                     })
+                ->editColumn('elasticsearch',
+                    function($project) {
+                        return view('projects.partials.elasticsearch_column', ['project' => $project])->render();
+                    })
+                ->editColumn('is_public',
+                    function($project) {
+                        return view('projects.partials.public_column', ['project' => $project])->render();
+                    })
                 ->addColumn('email',
                     function($project) {
                         return view('projects.partials.email_column', ['project' => $project])->render();
                     })
-                ->rawColumns(['starter_project', 'name', 'cloned_from'])
+                ->rawColumns(['starter_project', 'name', 'cloned_from', 'elasticsearch', 'is_public'])
                 ->skipPaging() // already paginated response
+                // we don't need DataTables filter here
                 ->filter(function ($instance) {
                     return true;
-                }) // we don't need DataTables filter here
+                })
+                // already order by applied
+                ->order(function ($query) {
+                    return true;
+                })
+
                 ->make(true);
         }
         return view('projects.index');

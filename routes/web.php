@@ -46,7 +46,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'c
     Route::resource('activity-types', 'Activity\ActivityTypeController');
 
     // projects
-    Route::get('projects/exclude-starter', 'Project\ProjectController@userProjects');
+    Route::get('projects/user-projects', 'Project\ProjectController@userProjects');
     Route::resource('projects', 'Project\ProjectController');
 
     // organization types
