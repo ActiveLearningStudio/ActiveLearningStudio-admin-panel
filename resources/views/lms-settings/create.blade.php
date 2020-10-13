@@ -84,7 +84,11 @@
                             {{ Aire::select([], 'user_id', 'User')->id('user_id')->addClass('form-control')->required() }}
                         </div>
                     </div>
-
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            {{ Aire::input('lms_login_id', 'LMS Login ID')->id('lms_login_id')->addClass('form-control') }}
+                        </div>
+                    </div>
                 </div>
 
                 <!-- /.card-body -->
