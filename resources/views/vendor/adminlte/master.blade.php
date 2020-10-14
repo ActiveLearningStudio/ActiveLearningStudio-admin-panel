@@ -96,7 +96,7 @@
     // set the header - bearer token
     $.ajaxSetup({
         beforeSend: function (xhr) {
-            xhr.setRequestHeader('Authorization', 'Bearer {{session("access_token")}}');
+            xhr.setRequestHeader('Authorization', 'Bearer {{auth_user("access_token")}}');
             $('#overlay').fadeIn();
         }, complete: function () {
             $('#overlay').fadeOut();

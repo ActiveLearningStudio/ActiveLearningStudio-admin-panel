@@ -1,5 +1,9 @@
 <?php
 
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Session\SessionManager;
+use Illuminate\Session\Store;
+
 if (!function_exists('app_name')) {
     /**
      * Helper to grab the application name.
@@ -102,5 +106,21 @@ if (!function_exists('api_v_url')) {
     function api_v_url()
     {
         return api_url() . '/v1/admin';
+    }
+}
+
+if (!function_exists('auth_user')) {
+    /**
+     * Get the auth user from session and return
+     * @param string $key
+     * @return Application|SessionManager|Store|mixed
+     */
+    function auth_user($key = '')
+    {
+        $user = session("auth_user");
+        if ($key) {
+            return $user[$key] ?? null;
+        }
+        return $user;
     }
 }

@@ -15,8 +15,7 @@ class CheckToken
      */
     public function handle($request, Closure $next)
     {
-        if (! session('access_token')) {
-            auth()->logout();
+        if (! auth_user('id')) {
             return redirect('login');
         }
         return $next($request);
