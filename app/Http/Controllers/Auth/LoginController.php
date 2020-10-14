@@ -62,9 +62,10 @@ class LoginController extends Controller
             return redirect()->back()->withErrors($this->response->json()['errors'])->withInput();
         }
         throw_if($this->response->failed() || $this->response->serverError(), new GeneralException($this->getError()));
-        session(['access_token' => $this->response['access_token']]);
-        // also login the user locally
-        Auth::loginUsingId($this->response['user']['id'], true);
+        $user = $this->response['user'];
+        $user['access_token'] = $this->response['access_token'];
+        // set the login session of the user
+        session(['auth_user' => $user]);
         return redirect(route('admin.dashboard'));
     }
 
