@@ -55,12 +55,6 @@
                             {{ Aire::input('lti_client_id', 'LTI Client ID')->id('lti_client_id')->addClass('form-control') }}
                         </div>
                     </div>
-
-                    <div class="form-group row">
-                        <div class="col-sm-12">
-                            {{ Aire::input('lms_login_id', 'LTI Login ID')->id('lms_login_id')->addClass('form-control') }}
-                        </div>
-                    </div>
                     <div class="form-group row">
                         <div class="col-sm-12">
                             {{ Aire::select(['moodle' => 'Moodle', 'canvas' => 'Canvas'], 'lms_name', 'LMS Name')->id('lms_name')->addClass('form-control') }}

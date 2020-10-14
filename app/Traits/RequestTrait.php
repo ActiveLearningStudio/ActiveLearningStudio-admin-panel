@@ -25,7 +25,7 @@ trait RequestTrait
      */
     public function getHTTP($end_point, $params = [])
     {
-        $this->response = Http::withToken(session('access_token'))->withHeaders($this->headers)->get(api_url() . $this->apiV . $end_point, $params);
+        $this->response = Http::withToken(auth_user('access_token'))->withHeaders($this->headers)->get(api_url() . $this->apiV . $end_point, $params);
         throw_if($this->response->failed() || $this->response->serverError(), new GeneralException($this->getError()));
         return $this->response->json();
     }
@@ -38,7 +38,7 @@ trait RequestTrait
      */
     public function postHTTP($end_point, $params = [])
     {
-        $this->response = Http::withToken(session('access_token'))->withHeaders($this->headers)->post(api_url() . $this->apiV . $end_point, $params);
+        $this->response = Http::withToken(auth_user('access_token'))->withHeaders($this->headers)->post(api_url() . $this->apiV . $end_point, $params);
         if ($this->response->status() === 422) {
             return redirect()->back()->withErrors($this->response->json()['errors'])->withInput();
         }
@@ -54,7 +54,7 @@ trait RequestTrait
      */
     public function putHTTP($end_point, $params = [])
     {
-        $this->response = Http::withToken(session('access_token'))->withHeaders($this->headers)->put(api_url() . $this->apiV . $end_point, $params);
+        $this->response = Http::withToken(auth_user('access_token'))->withHeaders($this->headers)->put(api_url() . $this->apiV . $end_point, $params);
         if ($this->response->status() === 422) {
             return redirect()->back()->withErrors($this->response->json()['errors'])->withInput();
         }
@@ -70,7 +70,7 @@ trait RequestTrait
      */
     public function deleteHTTP($end_point, $params = [])
     {
-        $this->response = Http::withToken(session('access_token'))->withHeaders($this->headers)->delete(api_url() . $this->apiV . $end_point);
+        $this->response = Http::withToken(auth_user('access_token'))->withHeaders($this->headers)->delete(api_url() . $this->apiV . $end_point);
         throw_if($this->response->failed() || $this->response->serverError(), new GeneralException($this->getError()));
         return $this->response->json();
     }
