@@ -39,8 +39,8 @@
                                         <th>Email</th>
                                         <th>Original Project</th>
                                         {{--                                        <th>Clone CTR</th>--}}
-                                        <th>Elastic Search</th>
-                                        <th>Public</th>
+{{--                                        <th>Elastic Search</th>--}}
+{{--                                        <th>Public</th>--}}
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -85,8 +85,8 @@
                         {data: 'email', name: 'email', orderable: false, searchable: false},
                         {data: 'cloned_from', name: 'cloned_from', searchable: false},
                         // {data: 'clone_ctr', name: 'clone_ctr', searchable: false},
-                        {data: 'elasticsearch', name: 'elasticsearch', searchable: false},
-                        {data: 'is_public', name: 'is_public', searchable: false},
+                        // {data: 'elasticsearch', name: 'elasticsearch', searchable: false},
+                        // {data: 'is_public', name: 'is_public', searchable: false},
                     ],
                     "order": [[0, "desc"]],
                 });

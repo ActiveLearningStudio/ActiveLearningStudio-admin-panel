@@ -76,11 +76,11 @@
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">Current Projects</h3>
-                    @empty(! $response['data']['projects'])
+              {{--      @empty(! $response['data']['projects'])
                         <a class="float-right btn-xs btn-primary" onclick="updateIndexes(this)"
                            href="javascript:void(0)">Update
                             Elastic</a>
-                    @endempty
+                    @endempty--}}
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body p-0">
@@ -91,31 +91,31 @@
                     <table class="table table-condensed">
                         <thead>
                         <tr>
-                            <th><input type="checkbox" id="check_all"> Elastic Search</th>
+{{--                            <th><input type="checkbox" id="check_all"> Elastic Search</th>--}}
                             <th>Project Name</th>
-                            <th>Public</th>
+{{--                            <th>Public</th>--}}
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($response['data']['projects'] as $project)
                             <tr>
-                                <td>
+                            {{--    <td>
                                     <input type="checkbox" class="project_id"
                                            {{$project['elasticsearch'] ? 'checked' : ''}} value="{{$project['id']}}">
                                     <span class="elastic_search">{{$project['elasticsearch'] ? ' Yes': ' No'}}</span>
-                                </td>
+                                </td>--}}
                                 {{-- <td><a href="{{config('app.frontend_url')}}project/{{$project['id']}}/shared"
                                         target="_blank">{{$project['name']}}</a></td>   --}}
                                 <td><a class="modal-preview" data-target="#preview-project" href="javascript:void(0)"
                                        data-href="{{route('admin.users.project-preview.modal', $project['id'])}}">
                                         {{'ID: '.$project['id']. ' | ' . $project['name']}}</a>
                                 </td>
-                                <td>
+                          {{--      <td>
                                     <input type="checkbox" class="project_public"
                                            onclick="togglePublic(this, {{$project['id']}})"
                                            {{$project['is_public'] ? 'checked' : ''}} value="{{$project['id']}}">
                                     <span class="is_public">{{$project['is_public'] ? ' Yes': ' No'}}</span>
-                                </td>
+                                </td>--}}
                             </tr>
                         @endforeach
                         </tbody>
