@@ -3,8 +3,8 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">{{$project['name']}}</h3>
-                <a href="javascript:void(0)" onclick="updateIndex(this, '{{$project['id']}}')"
-                   class="float-right btn-sm btn-primary">{{$project['elasticsearch'] ? 'Remove Index': 'Index'}} </a>
+{{--                <a href="javascript:void(0)" onclick="updateIndex(this, '{{$project['id']}}')"--}}
+{{--                   class="float-right btn-sm btn-primary">{{$project['elasticsearch'] ? 'Remove Index': 'Index'}} </a>--}}
             </div>
             <div class="card-body">
                 <div class="row">
