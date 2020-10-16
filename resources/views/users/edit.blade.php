@@ -76,46 +76,26 @@
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">Current Projects</h3>
-              {{--      @empty(! $response['data']['projects'])
-                        <a class="float-right btn-xs btn-primary" onclick="updateIndexes(this)"
-                           href="javascript:void(0)">Update
-                            Elastic</a>
-                    @endempty--}}
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body p-0">
-                    <p class="ml-2 mb-0"><small><i>Public checkbox will toggle the project public status ASAP as
-                                checked/un-checked.</i></small></p>
-                    <p class="ml-2 mb-0"><small><i>Elastic Search can be enabled/disabled for projects by clicking on
-                                EASTIC UPDATE button.</i></small></p>
                     <table class="table table-condensed">
                         <thead>
                         <tr>
-{{--                            <th><input type="checkbox" id="check_all"> Elastic Search</th>--}}
+                            <th>Status</th>
                             <th>Project Name</th>
-{{--                            <th>Public</th>--}}
+                            <th>Indexing</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($response['data']['projects'] as $project)
                             <tr>
-                            {{--    <td>
-                                    <input type="checkbox" class="project_id"
-                                           {{$project['elasticsearch'] ? 'checked' : ''}} value="{{$project['id']}}">
-                                    <span class="elastic_search">{{$project['elasticsearch'] ? ' Yes': ' No'}}</span>
-                                </td>--}}
-                                {{-- <td><a href="{{config('app.frontend_url')}}project/{{$project['id']}}/shared"
-                                        target="_blank">{{$project['name']}}</a></td>   --}}
+                                <td>{{$project['status_text']}}</td>
                                 <td><a class="modal-preview" data-target="#preview-project" href="javascript:void(0)"
                                        data-href="{{route('admin.users.project-preview.modal', $project['id'])}}">
                                         {{'ID: '.$project['id']. ' | ' . $project['name']}}</a>
                                 </td>
-                          {{--      <td>
-                                    <input type="checkbox" class="project_public"
-                                           onclick="togglePublic(this, {{$project['id']}})"
-                                           {{$project['is_public'] ? 'checked' : ''}} value="{{$project['id']}}">
-                                    <span class="is_public">{{$project['is_public'] ? ' Yes': ' No'}}</span>
-                                </td>--}}
+                                <td>{{$project['indexing_text']}}</td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -171,34 +151,6 @@
             }
         });
 
-        // function for updating the indexes of the project
-        function updateIndexes(ele) {
-            var index_projects = [];
-            var remove_index_projects = [];
-            $.each($(".project_id"), function () {
-                if ($(this).prop("checked")) {
-                    index_projects.push($(this).val());
-                } else {
-                    remove_index_projects.push($(this).val());
-                }
-            });
-
-            resetAjaxParams("POST");
-            callParams.Url = api_url + api_v + "/admin/projects/indexes";
-            // Set Data parameters
-            dataParams.index_projects = index_projects;
-            dataParams.remove_index_projects = remove_index_projects;
-            ajaxCall(callParams, dataParams, function (result) {
-                $(".project_id").next('.elastic_search').text('No');
-                $(".project_id:checked").next('.elastic_search').text('Yes');
-            });
-        }
-
-        // check and uncheck all
-        $("#check_all").change(function () {
-            $(".project_id:checkbox").prop('checked', $(this).prop("checked"));
-        });
-
         // form submit event prevent
         $("#user_update").on('submit', function (e) {
             e.preventDefault();
@@ -220,17 +172,5 @@
             });
             pass_sel.removeAttr('disabled');
         });
-
-        // toggle elastic search status for single project
-        function updateIndex(ele, id) {
-            resetAjaxParams();
-            callParams.Url = api_url + api_v + "/admin/projects/" + id + "/index";
-            ajaxCall(callParams, dataParams, function (result) {
-                $(ele).toggleText('Index', 'Remove Index'); // toggle the button text
-                let projectCheckBox = $(".project_id[value=" + id + "]");
-                projectCheckBox.prop('checked', !projectCheckBox.prop("checked")); // check uncheck the relevant checkbox
-                projectCheckBox.next('.elastic_search').toggleText('Yes', 'No'); // Yes, No
-            });
-        }
     </script>
 @endsection

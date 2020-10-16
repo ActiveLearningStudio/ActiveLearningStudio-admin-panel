@@ -458,30 +458,32 @@ function decodeHTML(html) {
 }
 
 /**
- * Toggle the is_public column for project
+ * Update elastic search index for project
  * @param ele
  * @param id
+ * @param index
  */
-function togglePublic(ele, id) {
+function updateIndex(ele, id, index) {
     resetAjaxParams();
-    callParams.Url = api_url + api_v + "/admin/projects/" + id + "/public-status";
-    ajaxCall(callParams, dataParams, function (result) {
-        $(ele).next('.is_public').toggleText('Yes', 'No'); // toggle the button text
+    callParams.Url = api_url + api_v + "/admin/projects/" + id + "/index/" + index;
+    ajaxCall(callParams, dataParams, function (response) {
+        updatePreviewModal(ele);
     });
 }
 
 /**
- * Update elastic search index for project
- * @param ele
- * @param id
+ * Update text and elements of preview modal after indexing
  */
-function updateIndex(ele, id) {
-    resetAjaxParams();
-    callParams.Url = api_url + api_v + "/admin/projects/" + id + "/index";
-    ajaxCall(callParams, dataParams, function (result) {
-        $(ele).toggleText('Index', 'Remove Index'); // toggle the button text
-        $(ele).next('.elasticsearch').toggleText('Yes', 'No'); // toggle the button text
-    });
+function updatePreviewModal(ele) {
+    let previewProject = $("#preview-project");
+    if (previewProject.length) {
+        let approveText = $("#approve-text");
+        approveText.text("NOT APPROVED");
+        if ($(ele).hasClass('approve')) {
+            approveText.text("APPROVED");
+        }
+        $(ele).hide();
+    }
 }
 
 /**

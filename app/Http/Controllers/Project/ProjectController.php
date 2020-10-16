@@ -41,19 +41,15 @@ class ProjectController extends Controller
                     function($project) {
                         return view('projects.partials.parent_project_column', ['project' => $project])->render();
                     })
-              /*  ->editColumn('elasticsearch',
-                    function($project) {
-                        return view('projects.partials.elasticsearch_column', ['project' => $project])->render();
-                    })*/
-            /*    ->editColumn('is_public',
-                    function($project) {
-                        return view('projects.partials.public_column', ['project' => $project])->render();
-                    })*/
                 ->addColumn('email',
                     function($project) {
                         return view('projects.partials.email_column', ['project' => $project])->render();
                     })
-                ->rawColumns(['starter_project', 'name', 'cloned_from',/* 'elasticsearch', 'is_public'*/])
+                ->addColumn('action',
+                    function($project) {
+                        return view('projects.partials.action', ['project' => $project])->render();
+                    })
+                ->rawColumns(['starter_project', 'name', 'cloned_from', 'action'])
                 ->skipPaging() // already paginated response
                 // we don't need DataTables filter here
                 ->filter(function ($instance) {
@@ -74,5 +70,12 @@ class ProjectController extends Controller
      */
     public function userProjects(){
         return view('projects.user-projects');
+    }
+
+    /**
+     * @return Application|Factory|View
+     */
+    public function indexingQueue(){
+        return view('projects.indexing-queue');
     }
 }
