@@ -254,7 +254,7 @@ function decodeHTML(html) {
  */
 function updateIndex(ele, id, index) {
     resetAjaxParams();
-    callParams.Url = api_url + api_v + "/admin/projects/" + id + "/index/" + index;
+    callParams.Url = api_url + api_v + "/admin/projects/" + id + "/indexes/" + index;
     ajaxCall(callParams, dataParams, function (response) {
         updatePreviewModal(ele);
     });
