@@ -300,6 +300,10 @@ return [
             'icon' => 'fas fa-tasks',
             'submenu' => [
                 [
+                    'text' => 'Indexing Queue',
+                    'url' => 'admin/projects/indexing-queue',
+                ],
+                [
                     'text' => 'User Projects',
                     'url' => 'admin/projects/user-projects',
                 ],

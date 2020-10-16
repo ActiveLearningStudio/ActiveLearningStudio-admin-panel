@@ -1,10 +1,18 @@
-<div class="row">
+<div class="row" data-project="{{$project['id']}}">
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">{{$project['name']}}</h3>
-{{--                <a href="javascript:void(0)" onclick="updateIndex(this, '{{$project['id']}}')"--}}
-{{--                   class="float-right btn-sm btn-primary">{{$project['elasticsearch'] ? 'Remove Index': 'Index'}} </a>--}}
+                <h3 class="card-title">{{$project['name']}}
+                    <small>(Project indexing is  <span id="approve-text" class="font-weight-bold">{{$project['indexing_text']}}</span>)</small>
+                </h3>
+                @if($project['indexing'] === 1 || $project['indexing'] === 2)
+                    <a href="javascript:void(0)" class="float-right btn-sm btn-primary approve ml-1"
+                       onclick="updateIndex(this, '{{ $project['id'] }}', 3)">Approve</a>
+                @endif
+                @if($project['indexing'] === 1 || $project['indexing'] === 3)
+                    <a href="javascript:void(0)" class="float-right btn-sm btn-primary not-approve"
+                       onclick="updateIndex(this, '{{ $project['id'] }}', 2)">Not Approve</a>
+                @endif
             </div>
             <div class="card-body">
                 <div class="row">

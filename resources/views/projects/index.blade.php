@@ -7,7 +7,6 @@
         <div class="row mb-2">
             <div class="col-sm-6">
                 <h1 class="m-0 text-dark">All Projects</h1>
-                <p><strong>Elastic search will work if both check-boxes public and elastic are checked.</strong></p>
             </div>
             <div class="col-sm-6">
                 <div class="float-sm-right">
@@ -22,8 +21,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">PROJECTS <small>(Check-Boxes can be used for toggling the index and
-                            public/private status instantly of any project.)</small>
+                    <h3 class="card-title">PROJECTS
                     </h3>
                     <select id="projects_filter" name="projects" class="float-right">
                         <option value="all" selected>All Projects</option>
@@ -53,8 +51,8 @@
                                         <th>Email</th>
                                         <th>Original Project</th>
                                         <th>Clone CTR</th>
-{{--                                        <th>Elastic Search</th>--}}
-{{--                                        <th>Public</th>--}}
+                                        <th>Status</th>
+                                        <th>Indexing</th>
                                         <th>Created At</th>
                                     </tr>
                                     </thead>
@@ -103,8 +101,8 @@
                         {data: 'email', name: 'email', orderable: false, searchable: false},
                         {data: 'cloned_from', name: 'cloned_from', searchable: false},
                         {data: 'clone_ctr', name: 'clone_ctr', searchable: false},
-                        // {data: 'elasticsearch', name: 'elasticsearch', searchable: false},
-                        // {data: 'is_public', name: 'is_public', searchable: false},
+                        {data: 'status_text', name: 'status_text', searchable: false},
+                        {data: 'indexing_text', name: 'indexing_text', searchable: false},
                         {data: 'created_at', name: 'created_at', searchable: false}
                     ],
                     "order": [[1, "desc"]],
