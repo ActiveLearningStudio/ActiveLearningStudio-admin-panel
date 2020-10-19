@@ -14,6 +14,7 @@ use Yajra\DataTables\Facades\DataTables;
 class LmsSettingController extends Controller
 {
     use RequestTrait;
+
     protected $end_point = '/lms-settings';
 
     /**
@@ -30,6 +31,10 @@ class LmsSettingController extends Controller
                 ->addColumn('action', function ($row) {
                     return view('lms-settings.partials.action', ['setting' => $row])->render();
                 })
+                ->editColumn('name', function ($row) {
+                    return isset($row['user']) ? $row['user']['first_name'] . ' ' . $row['user']['last_name'] : '';
+                })
+                ->skipPaging() // already paginated response
                 ->rawColumns(['action'])
                 ->make(true);
         }
@@ -51,7 +56,7 @@ class LmsSettingController extends Controller
      */
     public function edit($id)
     {
-        $response = $this->getHTTP($this->end_point.'/'.$id);
+        $response = $this->getHTTP($this->end_point . '/' . $id);
         return view('lms-settings.edit', ['response' => $response]);
     }
 

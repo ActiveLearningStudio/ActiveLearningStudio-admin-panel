@@ -34,6 +34,7 @@ class UserController extends Controller
                 ->addColumn('action', function ($row) {
                     return view('users.partials.action', ['user' => $row])->render();
                 })
+                ->skipPaging() // already paginated response
                 ->rawColumns(['action'])
                 ->make(true);
         }

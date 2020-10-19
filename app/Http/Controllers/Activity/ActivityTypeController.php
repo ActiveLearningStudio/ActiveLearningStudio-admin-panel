@@ -31,6 +31,7 @@ class ActivityTypeController extends Controller
                 ->addColumn('action', function ($row) {
                     return view('activity-types.partials.action', ['activityType' => $row])->render();
                 })
+                ->skipPaging() // already paginated response
                 ->rawColumns(['action', 'image'])
                 ->make(true);
         }
