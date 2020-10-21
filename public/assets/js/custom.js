@@ -70,6 +70,8 @@ function showMessage(message, type = 'success', title = 'SUCCESS', addClass = 'b
         title: title,
         class: addClass,
         icon: icon,
+        autohide: true,
+        delay: 8000,
         body: message,
     });
     // success_sel.append('<div class="alert alert-success"><p>' + message + '</p></div>');

@@ -87,5 +87,17 @@
                 destroy(url, id); // url and id parameter for fading the element
             }
         }
+
+        // update the user role
+        function update_role(ele) {
+            resetAjaxParams();
+            let role = $(ele).data('role');
+            let id = $(ele).data('id');
+            callParams.Url = api_url + api_v + "/admin/users/" + id + "/roles/" + role;
+            ajaxCall(callParams, {}, function (result) {
+                $(ele).data('role', 1 - role);
+                $(ele).toggleText('Make Admin', 'Remove Admin');
+            });
+        }
     </script>
 @endsection

@@ -5,6 +5,11 @@
         <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(-1px, 37px, 0px); top: 0px; left: 0px; will-change: transform;">
             <a class="dropdown-item" href="{{route('admin.users.edit', $user['id'])}}" onclick="location.replace('{{route('admin.users.edit', $user['id'])}}')">Edit</a>
             <a class="dropdown-item" data-id="{{ $user['id'] }}" onclick="destroy_data('{{ $user['id'] }}')">Delete</a>
+            @if($user['is_admin'])
+                <a class="dropdown-item" data-role="0" data-id="{{ $user['id'] }}" onclick="update_role(this)">Remove Admin</a>
+            @else
+                <a class="dropdown-item" data-role="1" data-id="{{ $user['id'] }}" onclick="update_role(this)">Make Admin</a>
+            @endif
         </div>
     </button>
 </div>
