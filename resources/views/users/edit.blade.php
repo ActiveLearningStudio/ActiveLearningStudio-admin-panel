@@ -26,8 +26,9 @@
                         'first_name' => 'required|max:255',
                         'last_name' => 'required|max:255',
                         'password' => 'regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/',
-                        'organization_name' => 'max:255',
-                        'job_title' => 'max:255',
+                        'organization_name' => 'required|string|max:50',
+                        'job_title' => 'required|string|max:255',
+                        'organization_type' => 'required|string|max:255',
                         'email' => 'required|email|max:255',
                         ])
                        ->messages([
@@ -49,6 +50,21 @@
                     <div class="form-group row">
                         <div class="col-sm-12">
                             {{ Aire::email('email', 'Email')->id('email')->addClass('form-control')->required() }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            {{ Aire::select([], 'organization_type', 'Organization Type')->id('organization_type')->addClass('form-control')->required() }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            {{ Aire::input('organization_name', 'Organization Name')->id('organization_name')->addClass('form-control')->required() }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            {{ Aire::input('job_title', 'Job Title')->id('job_title')->addClass('form-control')->required() }}
                         </div>
                     </div>
                     <div class="form-group row">
@@ -166,11 +182,27 @@
             // Set Data parameters
             dataParams = $(this).serialize();
             ajaxCall(callParams, dataParams, function (result) {
-                /*if ($("#clone_project").val()) {
-                    // location.reload();
-                }*/
+                if ($("#clone_project").val()) {
+                    location.reload();
+                }
             });
             pass_sel.removeAttr('disabled');
+        });
+
+        // organization types
+        callParams.Url = api_url + api_v + "/organization-types";
+        ajaxCall(callParams, {}, function (result){
+            result = result.data;
+            let organizationTypes = [];
+            $.map(result, function (item) {
+                organizationTypes.push({id: item.label, text: item.label});
+            });
+            let orgSelector = $('#organization_type');
+            orgSelector.select2({
+                theme: 'bootstrap4',
+                data: organizationTypes,
+            });
+            orgSelector.val('{{$response['data']['organization_type']}}').trigger('change');;
         });
     </script>
 @endsection
