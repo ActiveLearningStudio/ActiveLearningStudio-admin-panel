@@ -46,7 +46,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['check.tok
     Route::resource('activity-types', 'Activity\ActivityTypeController');
 
     // queue-monitor
-    Route::get('jobs', 'QueueMonitor\QueueMonitorController@jobs');
+    Route::get('queue-monitor/jobs', 'QueueMonitor\QueueMonitorController@jobs')->name('queue-monitor.jobs');
     Route::resource('queue-monitor', 'QueueMonitor\QueueMonitorController');
 
     // projects

@@ -343,7 +343,7 @@ return [
             'submenu' => [
                 [
                     'text' => 'Jobs',
-                    'url' => 'admin/jobs',
+                    'url' => 'admin/queue-monitor/jobs',
                 ],
                 [
                     'text' => 'Logs',

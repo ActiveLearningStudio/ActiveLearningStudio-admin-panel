@@ -27,18 +27,26 @@ class QueueMonitorController extends Controller
         if ($request->ajax()) {
             $response = $this->getHTTP($this->end_point, $request->all());
             return DataTables::custom($response['data'])
-                ->addColumn('status', function ($row){
+                ->addColumn('status', function ($row) {
                     return view('queue-monitor.partials.status_column', ['job' => $row])->render();
                 })
-                ->addColumn('detail', function ($row){
+                ->addColumn('detail', function ($row) {
                     return view('queue-monitor.partials.detail_column', ['job' => $row])->render();
                 })
-                ->editColumn('job_id', function ($row){
+                ->editColumn('job_id', function ($row) {
                     return view('queue-monitor.partials.name_column', ['job' => $row])->render();
                 })
                 ->setTotalRecords($response['meta']['total'])
                 ->skipPaging() // already paginated response
-                ->rawColumns(['action' , 'status', 'detail', 'job_id'])
+                // we don't need DataTables filter here
+                ->filter(function ($instance) {
+                    return true;
+                })
+                // already order by applied
+                ->order(function ($query) {
+                    return true;
+                })
+                ->rawColumns(['action', 'status', 'detail', 'job_id'])
                 ->make(true);
         }
         return view('queue-monitor.index');
@@ -49,13 +57,25 @@ class QueueMonitorController extends Controller
      * @return Application|Factory|View
      * @throws \Throwable
      */
-    public function jobs(Request $request){
+    public function jobs(Request $request)
+    {
         if ($request->ajax()) {
-            $response = $this->getHTTP($this->end_point, $request->all());
+            $response = $this->getHTTP($this->end_point . '/jobs', $request->all());
             return DataTables::custom($response['data'])
                 ->setTotalRecords($response['meta']['total'])
+                ->addColumn('action', function ($row){
+                    return view('queue-monitor.partials.job_action', ['job' => $row])->render();
+                })
+                // we don't need DataTables filter here
+                ->filter(function ($instance) {
+                    return true;
+                })
+                // already order by applied
+                ->order(function ($query) {
+                    return true;
+                })
                 ->skipPaging() // already paginated response
-                ->rawColumns(['action' , 'status', 'detail', 'job_id'])
+                ->rawColumns(['action', 'status', 'detail', 'job_id'])
                 ->make(true);
         }
         return view('queue-monitor.jobs');
