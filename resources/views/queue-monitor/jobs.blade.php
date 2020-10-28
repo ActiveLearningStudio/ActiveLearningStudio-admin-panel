@@ -100,7 +100,7 @@
         // if queue filter changes
         queue_filter.on("change", function () {
             reInitializeDataTable();
-            $(".retry_all,.forget_all").toggleClass("d-none");
+            $(".retry_all, .forget_all").toggleClass("d-none");
         });
 
         /**
