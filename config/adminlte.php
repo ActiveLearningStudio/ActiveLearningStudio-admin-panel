@@ -337,6 +337,20 @@ return [
                 ],
             ],
         ],
+        [
+            'text' => 'QUEUES',
+            'icon' => 'fas fa-chart-bar',
+            'submenu' => [
+                [
+                    'text' => 'Jobs',
+                    'url' => 'admin/queue-monitor/jobs',
+                ],
+                [
+                    'text' => 'Logs',
+                    'url' => 'admin/queue-monitor',
+                ],
+            ],
+        ],
     ],
 
     /*
