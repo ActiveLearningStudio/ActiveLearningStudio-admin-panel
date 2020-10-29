@@ -27,6 +27,8 @@ class QueueMonitorController extends Controller
         if ($request->ajax()) {
             $response = $this->getHTTP($this->end_point, $request->all());
             return DataTables::custom($response['data'])
+                ->setTotalRecords($response['meta']['total'])
+                ->setFilteredRecords($response['meta']['total'])
                 ->addColumn('status', function ($row) {
                     return view('queue-monitor.partials.status_column', ['job' => $row])->render();
                 })
@@ -63,6 +65,7 @@ class QueueMonitorController extends Controller
             $response = $this->getHTTP($this->end_point . '/jobs', $request->all());
             return DataTables::custom($response['data'])
                 ->setTotalRecords($response['meta']['total'])
+                ->setFilteredRecords($response['meta']['total'])
                 ->addColumn('action', function ($row){
                     return view('queue-monitor.partials.job_action', ['job' => $row])->render();
                 })
