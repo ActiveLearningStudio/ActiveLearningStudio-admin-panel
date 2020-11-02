@@ -296,6 +296,20 @@ return [
             ],
         ],
         [
+            'text' => 'Organizations',
+            'icon' => 'fas fa-fw fa-sitemap',
+            'submenu' => [
+                [
+                    'text' => 'All Organizations',
+                    'url' => 'admin/organizations',
+                ],
+                [
+                    'text' => 'Create Organization',
+                    'url' => 'admin/organizations/create',
+                ],
+            ],
+        ],
+        [
             'text' => 'PROJECTS',
             'icon' => 'fas fa-tasks',
             'submenu' => [
