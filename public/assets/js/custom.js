@@ -226,7 +226,7 @@ function initializeSelect2(target, url, textProp = ['title'], idProp = 'id') {
  * Initialize the date range picker
  * @param target
  */
-function initializeDateRange(target){
+function initializeDateRange(target) {
     $(target).daterangepicker({
         startDate: moment().subtract(29, 'days'),
         endDate: moment(),
