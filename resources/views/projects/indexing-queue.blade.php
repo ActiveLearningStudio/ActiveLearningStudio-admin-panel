@@ -25,7 +25,7 @@
                     </h3>
                     <select id="projects_filter" name="projects" class="float-right">
                         <option value="1" selected>REQUESTED</option>
-                        <option value="2">NOT APPROVED</option>
+                        <option value="2">REJECTED</option>
                         <option value="3">APPROVED</option>
                     </select>
                 </div>
