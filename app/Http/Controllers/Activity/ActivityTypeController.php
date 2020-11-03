@@ -31,8 +31,14 @@ class ActivityTypeController extends Controller
                 ->addColumn('action', function ($row) {
                     return view('activity-types.partials.action', ['activityType' => $row])->render();
                 })
+                ->addColumn('items', function ($row) {
+                    return view('activity-types.partials.items_column', ['activityType' => $row])->render();
+                })
                 ->skipPaging() // already paginated response
-                ->rawColumns(['action', 'image'])
+                ->rawColumns(['action', 'image', 'items'])
+                ->filter(function ($instance) {
+                    return true;
+                }) // to set the global datatable filtering false as records are already filtered from API
                 ->make(true);
         }
         return view('activity-types.index');
