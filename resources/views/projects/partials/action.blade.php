@@ -9,7 +9,7 @@
                 <a class="dropdown-item index-change" onclick="updateIndex(this, '{{ $project['id'] }}', 3)">Approve</a>
             @endif
             @if($project['indexing'] === 1 || $project['indexing'] === 3)
-                <a class="dropdown-item index-change" onclick="updateIndex(this, '{{ $project['id'] }}', 2)">Not Approve</a>
+                <a class="dropdown-item index-change" onclick="updateIndex(this, '{{ $project['id'] }}', 2)">Reject</a>
             @endif
         </div>
     </button>
