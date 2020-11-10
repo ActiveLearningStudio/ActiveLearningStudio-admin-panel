@@ -27,6 +27,9 @@
                         'name' => 'required|max:255',
                         'description' => 'required|max:255',
                         'parent_id' => 'integer',
+                        'admin_id' => 'required|integer',
+                        'image' => 'required',
+                        'domain' => 'required|max:255',
                         ])
                     }}
                 <div class="card-body">
@@ -42,7 +45,25 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-12">
+                            {{ Aire::input('domain', 'Domain')->id('domain')->addClass('form-control')->required() }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            {{ Aire::file('image', 'Image')->id('image')->required() }}
+                            <p></p>
+                            <img id="image-preview" src="" alt="Uploaded Image" onerror="this.style.display='none'"
+                                 style="max-width: 150px"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
                             {{ Aire::select([], 'parent_id', 'Parent')->id('parent_id')->addClass('form-control') }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            {{ Aire::select([], 'admin_id', 'Admin')->id('admin_id')->addClass('form-control')->required() }}
                         </div>
                     </div>
                 </div>
@@ -61,11 +82,17 @@
 @section('js')
     <script type="text/javascript">
         // form submit
-        let url = api_url + api_v + "/admin/organizations";
+        let url = api_url + api_v + "/admin/users";
+        initializeSelect2("#admin_id", url, ["email"]);
+
+        url = api_url + api_v + "/admin/organizations";
         initializeSelect2("#parent_id", url, ["name"]);
+
         multiPartFormSubmission("#organization-form", url, function (response){
+            $("#image-preview").hide();
             $("select").val(null);
-            $("#parent_id").empty().trigger('change')
+            $("#parent_id").empty().trigger('change');
+            $("#admin_id").empty().trigger('change')
         });
     </script>
 @endsection

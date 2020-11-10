@@ -26,6 +26,8 @@
                         'name' => 'required|max:255',
                         'description' => 'required|max:255',
                         'parent_id' => 'max:255',
+                        'image' => 'required',
+                        'domain' => 'required|max:255',
                         ])
                   }}
                 <div class="card-body">
@@ -41,7 +43,31 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-12">
+                            {{ Aire::input('domain', 'Domain')->id('domain')->addClass('form-control')->required() }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            {{ Aire::file('image', 'Image')->id('image') }}
+                            <p></p>
+                            <img id="image-preview" src="{{validate_api_url($response['data']['image'])}}"
+                                 alt="Uploaded Image" onerror="this.style.display='none'"
+                                 style="max-width: 150px"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
                             {{ Aire::select([], 'parent_id', 'Parent')->addClass('form-control')->id('parent_id') }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            {{ Aire::select([], 'clone_project_id', 'Clone Project')->addClass('form-control')->id('clone_project') }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            {{ Aire::select([], 'member_id', 'Add Member')->addClass('form-control')->id('member_id') }}
                         </div>
                     </div>
                 </div>
@@ -75,10 +101,35 @@
                             <tr>
                                 <td>{{$project['status_text']}}</td>
                                 <td><a class="modal-preview" data-target="#preview-project" href="javascript:void(0)"
-                                       data-href="{{route('admin.organizations.project-preview.modal', $project['id'])}}">
+                                       data-href="{{route('admin.users.project-preview.modal', $project['id'])}}">
                                         {{'ID: '.$project['id']. ' | ' . $project['name']}}</a>
                                 </td>
                                 <td>{{$project['indexing_text']}}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Current Users</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body p-0">
+                    <table class="table table-condensed">
+                        <thead>
+                        <tr>
+                            <th>Email</th>
+                            <th>Role</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($response['data']['users'] as $user)
+                            <tr>
+                                <td>{{$user['email']}}</td>
+                                <td>{{$user['organization_role']}}</td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -102,9 +153,16 @@
             $('#parent_id').append($option).trigger('change');
         @endif
 
+        url = api_url + api_v + "/admin/organizations/" + {{$response['data']['id']}} + "/member-options";
+        initializeSelect2("#member_id", url, ["email"]);
+
         // form submit
         url = api_url + api_v + "/admin/organizations/" + {{$response['data']['id']}};
-        multiPartFormSubmission("#organization_update", url);
+        multiPartFormSubmission("#organization_update", url, function (result) {
+            if ($("#clone_project").val() || $("#member_id").val()) {
+                location.reload();
+            }
+        });
 
         // initialize select2 for clone project field
         $("#clone_project").select2({
@@ -131,8 +189,8 @@
                     return {
                         results: $.map(projects, function (item) {
                             var emails = "";
-                            (item.organizations).forEach(function (organization) {
-                                emails = emails ? emails + ", " + organization.email : organization.email;
+                            (item.users).forEach(function (user) {
+                                emails = emails ? emails + ", " + user.email : user.email;
                             });
                             return {
                                 text: item.name + " - ( " + emails + ")",
@@ -146,28 +204,6 @@
                     };
                 }
             }
-        });
-
-        // form submit event prevent
-        $("#organization_update").on('submit', function (e) {
-            e.preventDefault();
-            resetAjaxParams("POST");
-            let pass_sel = $("#password");
-
-            // if empty value
-            if (!pass_sel.val()) {
-                pass_sel.attr('disabled', true);
-            }
-
-            callParams.Url = api_url + api_v + "/admin/organizations/" + '{{$response['data']['id']}}';
-            // Set Data parameters
-            dataParams = $(this).serialize();
-            ajaxCall(callParams, dataParams, function (result) {
-                /*if ($("#clone_project").val()) {
-                    // location.reload();
-                }*/
-            });
-            pass_sel.removeAttr('disabled');
         });
     </script>
 @endsection

@@ -32,6 +32,7 @@ class OrganizationController extends Controller
             // dd($response);
             return DataTables::custom($response['data'])
                 ->setTotalRecords($response['meta']['total'])
+                ->editColumn('image', '<img src="{{validate_api_url($image)}}" style="max-width: 75px">')
                 ->addColumn('parent', function($organization) {
                     return view('organizations.partials.parent_column', ['organization' => $organization])->render();
                 })
@@ -39,7 +40,7 @@ class OrganizationController extends Controller
                     return view('organizations.partials.action', ['organization' => $organization])->render();
                 })
                 ->skipPaging() // already paginated response
-                ->rawColumns(['action'])
+                ->rawColumns(['action', 'image'])
                 ->make(true);
         }
         return view('organizations.index');

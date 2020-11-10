@@ -35,6 +35,7 @@
                                     <thead>
                                     <tr role="row">
                                         <th>Name</th>
+                                        <th>Image</th>
                                         <th>Description</th>
                                         <th>Parent</th>
                                         <th>Action</th>
@@ -67,6 +68,7 @@
                 ajax: "{{ route('admin.organizations.index') }}",
                 columns: [
                     {data: 'name', name: 'name'},
+                    {data: 'image', name: 'image', orderable: false, searchable: false},
                     {data: 'description', name: 'description'},
                     {data: 'parent', name: 'parent', orderable: false, searchable: false},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
