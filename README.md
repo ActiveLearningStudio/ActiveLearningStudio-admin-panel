@@ -2,8 +2,12 @@
 
 ## Introduction
 
-Administration Panel for the CurrikiStudio application. Curriki brings you the tools to create interactive learning content like never before. Try our complete turn-key solution for building, delivering, and maintaining your interactive content.
+Administration Panel for the CurrikiStudio application. The administrative panel is a laravel/php application built on top of the CurrikiStudio API to help manage users, instructional resources (projects, playlists, and activities), as well as a place to configure the CurrikiStudion ReactJs application.
 
+See the following links for the repositories that contain the CurrikiStudion API and ReactJS applications:
+https://github.com/ActiveLearningStudio/ActiveLearningStudio-API<br />
+https://github.com/ActiveLearningStudio/ActiveLearningStudio-react-client<br />
+<br />
 <img src="https://www.curriki.org/wp-content/uploads/2020/11/admin-panel.png">
 <br /><br />
 ## Requirements
