@@ -4,7 +4,7 @@
 
 Administration Panel for the CurrikiStudio application. The administrative panel is a laravel/php application built on top of the CurrikiStudio API to help manage users, instructional resources (projects, playlists, and activities), as well as a place to configure the CurrikiStudion ReactJs application.
 
-See the following links for the repositories that contain the CurrikiStudion API and ReactJS applications:
+See the following links for the repositories that contain the CurrikiStudio API and ReactJS applications:
 https://github.com/ActiveLearningStudio/ActiveLearningStudio-API<br />
 https://github.com/ActiveLearningStudio/ActiveLearningStudio-react-client<br />
 <br />
