@@ -4,6 +4,8 @@
 
 Administration Panel for the CurrikiStudio application. Curriki brings you the tools to create interactive learning content like never before. Try our complete turn-key solution for building, delivering, and maintaining your interactive content.
 
+<img src="https://www.curriki.org/wp-content/uploads/2020/11/admin-panel.png">
+<br /><br />
 ## Requirements
 
 - PHP > 7.3
