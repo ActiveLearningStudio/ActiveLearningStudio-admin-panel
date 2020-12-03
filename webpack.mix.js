@@ -21,6 +21,7 @@ mix.styles([
     'public/vendor/pace-progress/themes/black/pace-theme-flash.css',
     'public/vendor/select2/css/select2.min.css',
     'public/vendor/select2-bootstrap4-theme/select2-bootstrap4.min.css',
+    'public/vendor/daterangepicker/daterangepicker.css',
     'public/assets/css/custom.css',
 ], 'public/assets/css/all.css');
 mix.scripts([
@@ -32,9 +33,10 @@ mix.scripts([
     'public/vendor/pace-progress/pace.min.js',
     'public/vendor/select2/js/select2.full.min.js',
     'public/vendor/adminlte/dist/js/adminlte.min.js',
+    'public/vendor/daterangepicker/moment.min.js',
+    'public/vendor/daterangepicker/daterangepicker.js',
     'public/assets/js/custom.js',
 ], 'public/assets/js/all.js');
-
 
 if (mix.inProduction()) {
     mix.version();

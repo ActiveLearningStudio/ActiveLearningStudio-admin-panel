@@ -11,7 +11,7 @@
                 @endif
                 @if($project['indexing'] === 1 || $project['indexing'] === 3)
                     <a href="javascript:void(0)" class="float-right btn-sm btn-primary not-approve"
-                       onclick="updateIndex(this, '{{ $project['id'] }}', 2)">Not Approve</a>
+                       onclick="updateIndex(this, '{{ $project['id'] }}', 2)">Reject</a>
                 @endif
             </div>
             <div class="card-body">

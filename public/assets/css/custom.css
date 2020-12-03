@@ -11,19 +11,24 @@
     text-align: center;
     display: inline-block;
 }
-.btn-sm-app>.fas, .btn-sm-app>.glyphicon, .btn-sm-app>.ion {
+
+.btn-sm-app > .fas, .btn-sm-app > .glyphicon, .btn-sm-app > .ion {
     display: block;
     font-size: 15px;
 }
-.toast{
-	min-width: 400px;
+
+.toast {
+    min-width: 400px;
 }
-.toasts-top-right{
+
+.toasts-top-right {
     z-index: 1051;
 }
+
 .btn-group.action-group.show {
     z-index: 1000;
 }
+
 #overlay {
     background: #ffffff;
     color: #666666;
@@ -38,6 +43,7 @@
     padding-top: 15%;
     opacity: .80;
 }
+
 .spinner {
     margin: 0 auto;
     height: 64px;
@@ -47,6 +53,7 @@
     border-right-color: transparent;
     border-radius: 50%;
 }
+
 @keyframes rotate {
     0% {
         transform: rotate(0deg);
@@ -55,7 +62,16 @@
         transform: rotate(360deg);
     }
 }
+
 .table {
     table-layout: fixed;
     width: 100% !important;
+}
+
+#date_range {
+    background: #fff;
+    cursor: pointer;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    width: 100%
 }

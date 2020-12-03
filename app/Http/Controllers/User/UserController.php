@@ -31,8 +31,17 @@ class UserController extends Controller
             $response = $this->getHTTP($this->end_point, $request->all());
             return DataTables::custom($response['data'])
                 ->setTotalRecords($response['meta']['total'])
+                ->setFilteredRecords($response['meta']['total'])
                 ->addColumn('action', function ($row) {
                     return view('users.partials.action', ['user' => $row])->render();
+                })
+                // already order by applied
+                ->order(function ($query) {
+                    return true;
+                })
+                // we don't need DataTables filter here
+                ->filter(function ($instance) {
+                    return true;
                 })
                 ->skipPaging() // already paginated response
                 ->rawColumns(['action'])
