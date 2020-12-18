@@ -36,6 +36,14 @@ class LmsSettingController extends Controller
                 })
                 ->skipPaging() // already paginated response
                 ->rawColumns(['action'])
+                // we don't need DataTables filter here
+                ->filter(function ($instance) {
+                    return true;
+                })
+                // already order by applied
+                ->order(function ($query) {
+                    return true;
+                })
                 ->make(true);
         }
         return view('lms-settings.index');

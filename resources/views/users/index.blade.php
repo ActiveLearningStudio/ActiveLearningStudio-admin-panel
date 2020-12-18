@@ -50,6 +50,8 @@
                                         <th>Last Name</th>
                                         <th>Date Registered</th>
                                         <th>Email</th>
+                                        <th>Organization Name</th>
+                                        <th>Organization Type</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
@@ -101,6 +103,8 @@
                     {data: 'last_name', name: 'last_name'},
                     {data: 'created_at', name: 'created_at'},
                     {data: 'email', name: 'email'},
+                    {data: 'organization_name', name: 'organization_name'},
+                    {data: 'organization_type', name: 'organization_type'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
                 ],
                 "order": [[2, "desc"]]
