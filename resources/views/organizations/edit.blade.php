@@ -87,7 +87,7 @@
                     <h3 class="card-title">Current Projects</h3>
                 </div>
                 <!-- /.card-header -->
-                <div class="card-body p-0">
+                <div class="card-body p-0 org-projects">
                     <table class="table table-condensed">
                         <thead>
                         <tr>
@@ -117,7 +117,7 @@
                     <h3 class="card-title">Current Users</h3>
                 </div>
                 <!-- /.card-header -->
-                <div class="card-body p-0">
+                <div class="card-body p-0 org-users">
                     <table class="table table-condensed">
                         <thead>
                         <tr>
@@ -206,4 +206,14 @@
             }
         });
     </script>
+@endsection
+
+@section('css')
+    <style>
+        .org-projects,
+        .org-users {
+            max-height: 500px;
+            overflow-y: scroll;
+        }
+    </style>
 @endsection
