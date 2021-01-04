@@ -212,7 +212,7 @@
     <style>
         .org-projects,
         .org-users {
-            max-height: 500px;
+            max-height: 350px;
             overflow-y: scroll;
         }
     </style>
