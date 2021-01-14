@@ -123,6 +123,7 @@
                         <tr>
                             <th>Email</th>
                             <th>Role</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -130,6 +131,13 @@
                             <tr>
                                 <td>{{$user['email']}}</td>
                                 <td>{{$user['organization_role']}}</td>
+                                <td>
+                                    <a
+                                        href="javascript:void(0)"
+                                        class="btn-sm btn-danger ml-1"
+                                        onclick="delOrgUsr(this, '{{ $user['id'] }}', '{{ $response['data']['id'] }}')"
+                                    >Delete</a>
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>

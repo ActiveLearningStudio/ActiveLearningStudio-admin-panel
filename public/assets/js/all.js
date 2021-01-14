@@ -2074,6 +2074,26 @@ function updateIndex(ele, id, index) {
 }
 
 /**
+ * Delete organization user
+ * @param ele
+ * @param usrId
+ * @param orgId
+ */
+function delOrgUsr(ele, usrId, orgId) {
+    var result = confirm("Are you sure you want to delete this user?");
+
+    if (result) {
+        let url = api_url + api_v + "/admin/organizations/" + orgId + "/user/" + usrId;
+
+        resetAjaxParams("DELETE");
+        callParams.Url = url;
+        ajaxCall(callParams, dataParams, function (result) {
+            $(ele).closest('tr').fadeOut('slow');
+        });
+    }
+}
+
+/**
  * Update text and elements of preview modal after indexing
  */
 function updatePreviewModal(ele) {
