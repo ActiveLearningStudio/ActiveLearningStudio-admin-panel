@@ -310,6 +310,20 @@ return [
             ],
         ],
         [
+            'text' => 'GROUPS',
+            'icon' => 'fas fa-users',
+            'submenu' => [
+                [
+                    'text' => 'All Groups',
+                    'url' => 'admin/groups',
+                ],
+                [
+                    'text' => 'Create Group',
+                    'url' => 'admin/groups/create',
+                ],
+            ],
+        ],
+        [
             'text' => 'PROJECTS',
             'icon' => 'fas fa-tasks',
             'submenu' => [

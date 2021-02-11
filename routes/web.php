@@ -65,4 +65,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['check.tok
     // organizations
     Route::resource('organizations', 'Organization\OrganizationController');
     Route::get('organizations/report/basic', 'Organization\OrganizationController@reportBasic')->name('organizations.report.basic');
+
+    // groups
+    Route::resource('groups', 'Group\GroupController');
+
 });
