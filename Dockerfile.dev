@@ -50,5 +50,6 @@ RUN usermod -u 1000 www-data && groupmod -g 1000 www-data
 RUN service apache2 restart
 
 WORKDIR /var/www/html
-#RUN composer install --no-dev --prefer-dist --optimize-autoloader && \
-#    composer clear-cache
+COPY ./admin ./
+RUN composer install --no-dev --prefer-dist --optimize-autoloader && \
+    composer clear-cache
