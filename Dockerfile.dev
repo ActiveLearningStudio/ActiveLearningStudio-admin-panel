@@ -2,9 +2,6 @@ FROM php:7.3-apache
 
 # Copy the PHP configuration file
 COPY ./php.ini /usr/local/etc/php/
-COPY ./* /var/www/html/
-
-
 
 # Add apache and php config for Laravel
 COPY ./site.conf /etc/apache2/sites-available/site.conf
