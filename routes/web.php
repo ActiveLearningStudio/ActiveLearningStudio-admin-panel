@@ -61,4 +61,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['check.tok
     Route::get('organization-types/{id}/delete', 'Organization\OrganizationTypesController@delete');
     Route::get('organization-types/{id}/order/{direction}', 'Organization\OrganizationTypesController@change_order');
     Route::post('organization-types/save', 'Organization\OrganizationTypesController@save');
+
+    // organizations
+    Route::resource('organizations', 'Organization\OrganizationController');
+    Route::get('organizations/report/basic', 'Organization\OrganizationController@reportBasic')->name('organizations.report.basic');
 });
