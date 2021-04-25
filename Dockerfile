@@ -52,7 +52,7 @@ RUN composer install --no-dev --prefer-dist --optimize-autoloader && \
     composer clear-cache
 
 
-COPY ./entrypoint.api.sh ./
-RUN chmod +x /var/www/html/entrypoint.api.sh
+COPY ./entrypoint.admin.sh ./
+RUN chmod +x /var/www/html/entrypoint.admin.sh
 
 ENTRYPOINT ["sh", "/var/www/html/entrypoint.admin.sh"]
