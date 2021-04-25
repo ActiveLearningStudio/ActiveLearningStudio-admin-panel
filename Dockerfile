@@ -48,5 +48,11 @@ COPY ./php.ini /usr/local/etc/php/
 
 
 COPY . .
-RUN composer install
+RUN composer install --no-dev --prefer-dist --optimize-autoloader && \
+    composer clear-cache
 
+
+COPY ./entrypoint.api.sh ./
+RUN chmod +x /var/www/html/entrypoint.api.sh
+
+ENTRYPOINT ["sh", "/var/www/html/entrypoint.api.sh"]
