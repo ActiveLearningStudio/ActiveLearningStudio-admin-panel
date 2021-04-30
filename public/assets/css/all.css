@@ -599,3 +599,7 @@ table.dataTable{clear:both;margin-top:6px !important;margin-bottom:6px !importan
     border: 1px solid #ccc;
     width: 100%
 }
+
+.select2 {
+    width:100%!important;
+}
