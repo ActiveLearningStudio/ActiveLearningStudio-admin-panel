@@ -89,7 +89,9 @@
     <script type="text/javascript">
         // form submit
         let url = api_url + api_v + "/admin/users";
-        serializedSubmitForm("#user-form", url);
+        serializedSubmitForm("#user-form", url, function (response) {
+            location.href = "{{env('APP_URL')}}/admin/users";
+        });
 
         // organization types
         callParams.Url = api_url + api_v + "/organization-types";
@@ -103,6 +105,7 @@
                 theme: 'bootstrap4',
                 data: organizationTypes,
             });
+
         });
     </script>
 @endsection
