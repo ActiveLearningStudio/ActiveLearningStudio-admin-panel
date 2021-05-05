@@ -185,6 +185,7 @@
                 if ($("#clone_project").val()) {
                     location.reload();
                 }
+                location.href = "{{env('APP_URL')}}/admin/users";
             });
             pass_sel.removeAttr('disabled');
         });
