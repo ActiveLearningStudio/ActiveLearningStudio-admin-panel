@@ -16,10 +16,10 @@ node {
     stage('Push image') {	
         docker.withRegistry('https://quay.io', 'docker-private-credentials') {            
                 app.push("${env.BUILD_NUMBER}")            
-                app.push("develop")        
+                app.push("stage")        
         }    
     }
-    def labels = ['currikidev', 'currikionelxp', 'currikimopse']
+    def labels = ['currikistage']
 
     for (label in labels) {
         node(label) {
