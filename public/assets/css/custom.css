@@ -75,3 +75,7 @@
     border: 1px solid #ccc;
     width: 100%
 }
+
+.select2 {
+    width:100%!important;
+}

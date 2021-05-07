@@ -1,0 +1,34 @@
+node {
+    def app
+    
+    stage('Clone repository') {               
+        checkout scm    
+    }  
+    
+    stage('Build image') {         
+        app = docker.build("quay.io/curriki/admin")
+    } 
+    stage('Test image') {           
+        app.inside { 
+                sh 'echo "Api Tests passed"'        
+        }    
+    } 
+    stage('Push image') {	
+        docker.withRegistry('https://quay.io', 'docker-private-credentials') {            
+                app.push("${env.BUILD_NUMBER}")            
+                app.push("stage")        
+        }    
+    }
+    def labels = ['currikistage']
+
+    for (label in labels) {
+        node(label) {
+            stage('Deploying Image ' + label){
+                echo 'Copy'
+                sh "yes | docker stack deploy --compose-file ~/curriki/docker-compose-stage.yml currikistack" 
+                echo 'Copy completed'
+            }
+        }
+    }
+    
+}

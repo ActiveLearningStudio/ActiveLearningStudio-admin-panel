@@ -1,12 +1,12 @@
 @extends('adminlte::page')
 
-@section('title', 'Edit User')
+@section('title', 'Edit Organization')
 
 @section('content_header')
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-dark">Edit User</h1>
+                <h1 class="m-0 text-dark">Edit Organization</h1>
             </div>
         </div>
     </div>
@@ -21,55 +21,43 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                {{ Aire::open()->class('form-horizontal')->id('user_update')->put()->bind($response['data'])
+                {{ Aire::open()->class('form-horizontal')->id('organization_update')->put()->bind($response['data'])
                       ->rules([
-                        'first_name' => 'required|max:255',
-                        'last_name' => 'required|max:255',
-                        'password' => 'regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/',
-                        'organization_name' => 'required|string|max:50',
-                        'job_title' => 'required|string|max:255',
-                        'organization_type' => 'required|string|max:255',
-                        'email' => 'required|email|max:255',
+                        'name' => 'required|max:255',
+                        'description' => 'required|max:255',
+                        'parent_id' => 'max:255',
+                        'image' => 'required',
+                        'domain' => 'required|max:255',
                         ])
-                       ->messages([
-                         'regex' => ':attribute must be 8 characters long, should contain at-least 1 Uppercase, 1 Lowercase and 1 Numeric character.',
-                        ])
-
                   }}
                 <div class="card-body">
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            {{ Aire::input('first_name', 'First Name')->id('first_name')->addClass('form-control')->required() }}
+                            {{ Aire::input('name', 'Name')->id('name')->addClass('form-control')->required() }}
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            {{ Aire::input('last_name', 'Last Name')->id('last_name')->addClass('form-control')->required() }}
+                            {{ Aire::input('description', 'Description')->id('description')->addClass('form-control')->required() }}
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            {{ Aire::email('email', 'Email')->id('email')->addClass('form-control')->required() }}
+                            {{ Aire::input('domain', 'Domain')->id('domain')->addClass('form-control')->required() }}
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            {{ Aire::select([], 'organization_type', 'Organization Type')->id('organization_type')->addClass('form-control')->required() }}
+                            {{ Aire::file('image', 'Image')->id('image') }}
+                            <p></p>
+                            <img id="image-preview" src="{{validate_api_url($response['data']['image'])}}"
+                                 alt="Uploaded Image" onerror="this.style.display='none'"
+                                 style="max-width: 150px"/>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            {{ Aire::input('organization_name', 'Organization Name')->id('organization_name')->addClass('form-control')->required() }}
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-sm-12">
-                            {{ Aire::input('job_title', 'Job Title')->id('job_title')->addClass('form-control')->required() }}
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-sm-12">
-                            {{ Aire::input('password', 'Password')->id('password')->addClass('form-control')->placeholder('Leave Blank for unchanged.') }}
+                            {{ Aire::select([], 'parent_id', 'Parent')->addClass('form-control')->id('parent_id') }}
                         </div>
                     </div>
                     <div class="form-group row">
@@ -77,12 +65,17 @@
                             {{ Aire::select([], 'clone_project_id', 'Clone Project')->addClass('form-control')->id('clone_project') }}
                         </div>
                     </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            {{ Aire::select([], 'member_id', 'Add Member')->addClass('form-control')->id('member_id') }}
+                        </div>
+                    </div>
                 </div>
 
                 <!-- /.card-body -->
                 <div class="card-footer">
-                    {{Aire::submit('Update User')->addClass('btn btn-info')}}
-                    {{Aire::submit('Cancel')->addClass('btn btn-default float-right cancel')->data('redirect', route('admin.users.index'))}}
+                    {{Aire::submit('Update Organization')->addClass('btn btn-info')}}
+                    {{Aire::submit('Cancel')->addClass('btn btn-default float-right cancel')->data('redirect', route('admin.organizations.index'))}}
                 </div>
                 <!-- /.card-footer -->
                 {{ Aire::close() }}
@@ -94,7 +87,7 @@
                     <h3 class="card-title">Current Projects</h3>
                 </div>
                 <!-- /.card-header -->
-                <div class="card-body p-0">
+                <div class="card-body p-0 org-projects">
                     <table class="table table-condensed">
                         <thead>
                         <tr>
@@ -119,12 +112,66 @@
                 </div>
                 <!-- /.card-body -->
             </div>
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Current Users</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body p-0 org-users">
+                    <table class="table table-condensed">
+                        <thead>
+                        <tr>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($response['data']['users'] as $user)
+                            <tr>
+                                <td>{{$user['email']}}</td>
+                                <td>{{$user['organization_role']}}</td>
+                                <td>
+                                    <a
+                                        href="javascript:void(0)"
+                                        class="btn-sm btn-danger ml-1"
+                                        onclick="delOrgUsr(this, '{{ $user['id'] }}', '{{ $response['data']['id'] }}')"
+                                    >Delete</a>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
         </div>
     </div>
     @include('layouts.base-modal', ['modal' => ['id' => 'preview-project', 'class' => 'modal-xl', 'title' => 'Preview Project']])
 @stop
 @section('js')
     <script type="text/javascript">
+        // form submit
+        let url = api_url + api_v + "/admin/organizations/" + {{$response['data']['id']}} + "/parent-options";
+        initializeSelect2("#parent_id", url, ["name"]);
+
+        @if (isset($response['data']['parent']))        
+            // set the already selected user option
+            var $option = $("<option selected></option>").val('{{$response['data']['parent']['id']}}').text(decodeHTML('{{$response['data']['parent']['name']}}'));
+            $('#parent_id').append($option).trigger('change');
+        @endif
+
+        url = api_url + api_v + "/admin/organizations/" + {{$response['data']['id']}} + "/member-options";
+        initializeSelect2("#member_id", url, ["email"]);
+
+        // form submit
+        url = api_url + api_v + "/admin/organizations/" + {{$response['data']['id']}};
+        multiPartFormSubmission("#organization_update", url, function (result) {
+            if ($("#clone_project").val() || $("#member_id").val()) {
+                location.reload();
+            }
+        });
+
         // initialize select2 for clone project field
         $("#clone_project").select2({
             theme: 'bootstrap4',
@@ -140,7 +187,7 @@
                     return {
                         q: params.term,
                         type: 'public',
-                        users: true,
+                        organizations: true,
                         page: params.page || 1,
                         exclude_starter: 1
                     };
@@ -166,44 +213,15 @@
                 }
             }
         });
-
-        // form submit event prevent
-        $("#user_update").on('submit', function (e) {
-            e.preventDefault();
-            resetAjaxParams("POST");
-            let pass_sel = $("#password");
-
-            // if empty value
-            if (!pass_sel.val()) {
-                pass_sel.attr('disabled', true);
-            }
-
-            callParams.Url = api_url + api_v + "/admin/users/" + '{{$response['data']['id']}}';
-            // Set Data parameters
-            dataParams = $(this).serialize();
-            ajaxCall(callParams, dataParams, function (result) {
-                if ($("#clone_project").val()) {
-                    location.reload();
-                }
-                location.href = "{{env('APP_URL')}}/admin/users";
-            });
-            pass_sel.removeAttr('disabled');
-        });
-
-        // organization types
-        callParams.Url = api_url + api_v + "/organization-types";
-        ajaxCall(callParams, {}, function (result){
-            result = result.data;
-            let organizationTypes = [];
-            $.map(result, function (item) {
-                organizationTypes.push({id: item.label, text: item.label});
-            });
-            let orgSelector = $('#organization_type');
-            orgSelector.select2({
-                theme: 'bootstrap4',
-                data: organizationTypes,
-            });
-            orgSelector.val('{{$response['data']['organization_type']}}').trigger('change');;
-        });
     </script>
+@endsection
+
+@section('css')
+    <style>
+        .org-projects,
+        .org-users {
+            max-height: 350px;
+            overflow-y: scroll;
+        }
+    </style>
 @endsection
